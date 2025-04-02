@@ -1,0 +1,1881 @@
+openapi: 3.0.0
+info:
+  title: DreamsForSale API
+  description: API for DFS platform supporting clients, vendors, and administrators.
+  version: 1.0.0
+
+tags:
+  - name: Gift
+    description: Operations regarding gifts.
+  - name: Service
+    description: Operations regarding services connected to the gifts.
+  - name: Purchase
+    description: Access to client purchases
+  - name: User
+    description: Operations regarding the users.
+  - name: Client
+    description: Operations regarding the clients.
+  - name: Vendor
+    description: Operations regarding the vendors.
+  - name: Admin
+    description: Operations available for administrators.
+  - name: Business
+    description: Operation regarding the business setup on the platform.
+  - name: Review
+    description: Operation regarding the reviews of gifts, services and businesses.
+
+paths:
+
+# AUTHORIZATION
+  /auth/signup/client:
+    post:
+      tags:
+        - Client
+        - Authorization
+      summary: Client registration
+      description: Register a new user.
+      operationId: signUpC
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+                description: clientId
+            applicatation/xml:
+              schema:
+                type: string
+                format: uuid
+                description: clientId
+          description: Client registered
+
+  /auth/signup/vendor:
+    post:
+      tags:
+        - Vendor
+        - Authorization
+      summary: Vendor registration
+      description: Register a new user.
+      operationId: signUpV
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+                description: vendorId
+            applicatation/xml:
+              schema:
+                type: string
+                format: uuid
+                description: vendorId
+          description: Vendor registered
+          
+  /auth/signup/admin:
+    post:
+      tags:
+        - Admin
+        - Authorization
+      summary: User registration
+      description: Register a new user.
+      operationId: signUpA
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+                description: adminId
+            applicatation/xml:
+              schema:
+                type: string
+                format: uuid
+                description: adminId
+          description: User registered
+
+  /auth/login:
+    post:
+      tags:
+        - User
+        - Authorization
+      summary: User authentication
+      description: Authenticate a user and return a token.
+      operationId: login
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: jwt
+            applicatation/xml:
+              schema:
+                type: string
+                format: jwt
+          description: Login successful
+
+# CLIENT
+  /clients/{clientId}/purchases:
+    get:
+      tags:
+        - Purchase
+        - Client
+      summary: View previous purchases
+      description: Retrieve the purchase history of an authenticated user.
+      operationId: getClientPurchases
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: dateFrom
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetGiftDTO'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GetGiftDTO'
+          description: Successful response
+
+  /clients/{clientId}/account:
+    get:
+      tags:
+        - Client
+      summary: Get account details.
+      description: View and update personal account settings.
+      operationId: getClientAccount
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetClientDTO'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GetClientDTO'
+          description: Successful response
+  
+  /gifts/{giftId}/claim:
+    post:
+      tags:
+        - Gift
+        - Service
+        - Client
+      summary: Claim a received gift
+      description: Allows users to claim received gifts.
+      operationId: claimGift
+      parameters:
+        - name: giftId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: clientId
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: date-time
+            application/xml:
+              schema:
+                type: string
+                format: date-time
+          description: Gift claimed at given date.
+          
+  /services/{clientId}/schedule:
+    get:
+      tags:
+        - Gift
+        - Service
+        - Client
+        - Admin
+      summary: View client gift schedule
+      description: Display scheduled services for gift claims for a given client.
+      operationId: getClientSchedule
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetServiceDTO'
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Client not found
+
+# VENDORS
+  /vendors/{vendorId}/account:
+    get:
+      tags:
+        - Vendor
+      summary: Get vendor account details.
+      description: View and update personal account settings.
+      operationId: getVendorAccount
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorDTO'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GetVendorDTO'
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Vendor not found
+          
+  /vendors/business/{businessId}:
+    get:
+      tags:
+        - Vendor
+      summary: Get vendor account details.
+      description: View and update personal account settings.
+      operationId: getBusinessById
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBusinessDTO'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/GetBusinessDTO'
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Vendor not found
+
+  /gifts:
+    get:
+      tags:
+        - Gift
+      summary: Search and list products
+      description: Retrieve products with filtering options.
+      operationId: searchGiftsByTags
+      parameters:
+        - name: tags
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: price_range_min
+          in: query
+          schema:
+            type: number
+            format: money
+        - name: price_range_max
+          in: query
+          schema:
+            type: number
+            format: money
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetGiftDTO'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetGiftDTO'      
+            text/plain:
+              schema:
+                type: string
+          description: Successful response
+
+  /services/{businessId}/schedule:
+    get:
+      tags:
+        - Gift
+        - Service
+        - Business
+        - Vendor
+        - Admin
+      summary: View gift schedule
+      description: Display scheduled services for gift claims for a given business.
+      operationId: getBusinessSchedule
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetServiceDTO'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetServiceDTO'      
+            text/plain:
+              schema:
+                type: string
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+  
+          
+  /services/{businessId}/service/{serviceId}:
+    put:
+      tags:
+        - Service
+        - Business
+        - Vendor
+      summary: Update service
+      description: Update service for a given business.
+      operationId: updateServiceById
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: serviceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The review body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateServiceDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/UpdateServiceDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+  /services/{businessId}/gift:
+    post:
+      tags:
+        - Gift
+        - Business
+        - Vendor
+      summary: Create a gift
+      description: Create a gift
+      operationId: createGift
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The gift.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGiftDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateGiftDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+          
+  /services/{businessId}/gift/{giftId}:
+    put:
+      tags:
+        - Gift
+        - Business
+        - Vendor
+      summary: Update a gift
+      description: Update a gift.
+      operationId: updateGiftById
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: giftId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The gift.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGiftDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/UpdateGiftDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+# REVIEWS
+  /reviews/{giftId}:
+    post:
+      tags:
+        - Review
+      summary: Leave a review
+      description: Submit a review for a purchased or received product.
+      operationId: leaveGiftReviewById
+      parameters:
+        - name: giftId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The review body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateReviewDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: Review created
+    
+    get:
+      tags:
+        - Review
+      summary: Get a list of reviews
+      description: Submit a review for a purchased or received product.
+      operationId: getGiftReviews
+      parameters:
+        - name: giftId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          required: true
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetReviewDTO'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetReviewDTO'      
+            text/plain:
+              schema:
+                type: string
+          description: Review data
+          
+          
+  /reviews/{reviewId}:
+    get:
+      tags:
+        - Review
+      summary: Get a single review
+      description: Submit a review for a purchased or received product.
+      operationId: getReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetReviewDTO"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/GetReviewDTO"
+            text/plain:
+              schema:
+                type: string
+          description: Review data
+          
+  /vendors/{vendorId}/registerBusiness:
+    post:
+      tags:
+        - Vendor
+        - Business
+      summary: Register business
+      description: Register a new business on DFS.
+      operationId: registerBusiness
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: New client.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBusinessDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateBusinessDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '201':
+          description: Business registered
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /vendors/{vendorId}/gifts:
+    get:
+      tags:
+        - Vendor
+        - Gift
+        - Service
+      summary: View and manage product listings
+      description: List and manage vendor products.
+      operationId: getVendorGifts
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Vendor not found
+
+  /vendors/{vendorId}/orders:
+    get:
+      tags:
+      - Vendor
+      summary: Processing status of current orders
+      description: Interface with shipping service for order processing.
+      operationId: getVendorOrders
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/OrderStatusDTO'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/OrderStatusDTO'
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+  
+  /vendors/{vendorId}/order/{orderId}:
+    get:
+      tags:
+        - Vendor
+      summary: Processing status of given
+      operationId: getOrderStatusById
+      description: Interface with shipping service for order processing.
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatusDTO'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderStatusDTO'
+          description: Successful response
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Order not found
+
+# ADMINISTRATORS
+  /admin/clients:
+    post:
+      tags:
+        - Client
+        - Admin
+      summary: Create client account
+      description: Create new client account.
+      operationId: createClient
+      requestBody:
+        description: New client.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateClientDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateClientDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+          description: Client created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+  /admin/clients/getAll:
+    get:
+      tags:
+        - Client
+        - Admin
+      summary: Get a paginated list of users
+      operationId: getAllClients
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /admin/clients/{clientId}:
+    get:
+      tags:
+        - Client
+        - Admin
+      summary: Get user details
+      operationId: getClientById
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetClientDTO'
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CreateClientDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Client not found
+    put:
+      tags:
+        - Client
+        - Admin
+      summary: Update user details
+      operationId: updateClientById
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClientDTO'
+      responses:
+        '200':
+          description: User details updated
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+
+  /admin/vendors:
+    post:
+      tags:
+        - Vendor
+        - Admin
+      summary: Create vendor account
+      description: Create new vendor account.
+      operationId: createVendor
+      requestBody:
+        description: The account body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVendorDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateVendorDTO"
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+          description: Vendor created
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /admin/vendors/getAll:
+    get:
+      tags:
+        - Vendor
+        - Admin
+      summary: Get a paginated list of users
+      operationId: getAllVendors
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /admin/vendors/{vendorId}:
+    get:
+      tags:
+        - User
+        - Admin
+      summary: Get user details
+      operationId: getVendorById
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVendorDTO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Vendor not found
+    put:
+      tags:
+        - User
+        - Admin
+      summary: Update user details
+      operationId: updateVendorById
+      parameters:
+        - name: vendorId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVendorDTO'
+      responses:
+        '200':
+          description: User details updated
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Vendor not found
+          
+  /admin/administrators:
+    post:
+      tags:
+        - Admin
+        - Client
+      summary: Create admin account
+      description: Create new admin account.
+      operationId: createAdmin
+      requestBody:
+        description: The account body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAdminDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CreateAdminDTO"
+          text/plain:
+            schema:
+              type: string
+      
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+          description: Administrator created
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          
+  /admin/administrators/getAll:
+    get:
+      tags:
+        - Client
+        - Admin
+      summary: Get a paginated list of users
+      operationId: getAllAdmins
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: count
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    -  $ref: '#/components/schemas/GetClientDTO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /admin/administrators/{adminId}:
+    get:
+      tags:
+        - Admin
+      summary: Get user details
+      operationId: getAdminById
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdminDTO'
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CreateAdminDTO"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Admin not found
+    put:
+      tags:
+        - Admin
+      summary: Update user details
+      operationId: updateAdminById
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAdminDTO'
+      responses:
+        '200':
+          description: User details updated
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Admin not found
+
+  /admin/users/{userId}:
+    delete:
+      tags:
+        - Admin
+      summary: Delete or archive user account
+      description: Permanently delete or archive a user.
+      operationId: deleteUserById
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: role
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: ["vendor", "client", "admin"]
+            example: "client"
+      
+      responses:
+        '204':
+          description: User deleted or archived
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+          
+  /admin/users/{userId}/suspend:
+    post:
+      tags:
+        - Admin
+      summary: Suspend user account
+      description: Suspend a user for violations.
+      operationId: suspendUserById
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: ["vendor", "client", "admin"]
+            example: "client"
+      
+      responses:
+        '200':
+          description: User suspended
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+
+  /admin/users/{userId}/reinstate:
+    post:
+      tags:
+        - Admin
+      summary: Reinstate user account
+      description: Reinstate a suspended user.
+      operationId: reinstateUserById
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: role
+          in: query
+          schema: 
+            type: string
+            enum: ["vendor", "client", "admin"]
+            example: "client"
+      
+      responses:
+        '200':
+          description: User reinstated
+        '400':
+          description: Invalid input
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+
+
+  /admin/businesses/{businessId}/verify:
+    post:
+      tags:
+        - Admin
+      summary: Verify business
+      description: Approve or reject business verification.
+      operationId: verifyBusinessById
+      parameters:
+        - name: businessId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Business verification status.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BusinessVerificationDTO"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/BusinessVerificationDTO"
+          text/plain:
+            schema:
+              type: string
+      
+      responses:
+        '200':
+          description: Business verification status set
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Business not found
+  
+# PURCHASE
+  /cart/{clientId}:
+    get:
+      tags:
+        - Purchase
+      summary: View shopping cart
+      description: Retrieve the current shopping cart items.
+      operationId: getClientCart
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+    post:
+      tags:
+        - Purchase
+      summary: Add item to cart
+      description: Add a product to the shopping cart.
+      operationId: addItemToClientCart
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Item Id
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+              format: uuid
+          application/xml:
+            schema:
+              type: string
+              format: uuid
+          text/plain:
+            schema:
+              type: string
+              format: uuid
+      responses:
+        '201':
+          description: Item added
+
+
+  /cart/{clientId}/{giftId}:
+    delete:
+      tags:
+        - Purchase
+      summary: Remove an item from cart
+      description: Remove an item from cart.
+      operationId: addItemToClientCartById
+      parameters:
+        - name: clientId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: giftId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Item removed
+
+components:
+  schemas:
+    UpdateServiceDTO:
+      required:
+        - businessId
+        - businessName
+        - status
+        - clientId
+        - startDate
+      type: object
+      properties:
+        businessId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: ["pending_approval", "approved", "cancelled", "pending_rescheduling"]
+          example: "pending_approval"
+        businessName:
+          type: string
+          description: Name of business that is selling the service.
+        clientId:
+          type: string
+          format: uuid
+        startDate:
+          type: string
+          format: date-time
+          
+    GetServiceDTO:
+      type: object
+      properties:
+        businessId:
+          type: string
+          format: uuid
+        serviceId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: ["pending_approval", "approved", "cancelled", "pending_rescheduling"]
+          example: "pending_approval"
+        businessName:
+          type: string
+          description: Name of business that is selling the service.
+        clientId:
+          type: string
+          format: uuid
+        startDate:
+          type: string
+          format: date-time
+    
+    CreateGiftDTO:
+      required:
+        - businessId
+        - name
+        - isService
+        - giftDescription
+        - price
+      type: object
+      properties:
+        giftId: 
+          type: string
+          format: uuid
+        isService:
+          type: boolean
+        businessId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        giftDescription:
+          type: string
+        price:
+          type: number
+          format: money
+    
+    UpdateGiftDTO:
+      required:
+        - businessId
+        - name
+        - isService
+        - giftDescription
+        - price
+      type: object
+      properties:
+        giftId: 
+          type: string
+          format: uuid
+        isService:
+          type: boolean
+        businessId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        giftDescription:
+          type: string
+  
+    GetGiftDTO:
+      type: object
+      properties:
+        giftId: 
+          type: string
+          format: uuid
+        isService:
+          type: boolean
+        businessId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        giftDescription:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        
+  
+    CreateReviewDTO:
+      required:
+        - title
+        - rating
+      type: object
+      properties:
+        rating:
+          type: number
+          format: float
+          example: 8.5
+        title:
+          type: string
+          example: Great review
+        review-text:
+          type: string
+          example: Review text
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            xml:
+              name: photoUrl
+              
+      
+    GetReviewDTO:
+      type: object
+      properties:
+        rating:
+          type: number
+          format: float
+          example: 8.5
+        title:
+          type: string
+          example: Great review
+        review-text:
+          type: string
+          example: Review text
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            format: photoUrl
+    
+    CreateBusinessDTO:
+      required:
+        - applicantId
+        - name
+        - contact-info
+      type: object
+      properties:
+        applicantId:
+          type: string
+          format: uuid
+          description: The vendor id that applied for the business creation.
+        contact-info:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              format: phone-number
+            website:
+              type: string
+              format: url
+    
+    GetBusinessDTO:
+      type: object
+      properties:
+        applicantId:
+          type: string
+          format: uuid
+          description: The vendor id that applied for the business creation.
+        contact-info:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              format: phone-number
+            website:
+              type: string
+              format: url
+            
+    CreateClientDTO:
+      required:
+        - email
+        - password
+        - first_name
+        - last_name
+        - birthday
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "client@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        city:
+          type: string
+          example: "Rzeszów"
+        birthday:
+          type: string
+          format: date
+          
+    UpdateClientDTO:
+      required:
+        - email
+        - password
+        - first_name
+        - last_name
+        - birthday
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "client@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        city:
+          type: string
+          example: "Rzeszów"
+        birthday:
+          type: string
+          format: date
+          
+    GetClientDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "client@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        city:
+          type: string
+          example: "Rzeszów"
+        birthday:
+          type: string
+          format: date
+        
+    CreateVendorDTO:
+      required:
+        - email
+        - password
+        - first_name
+        - last_name
+        - profession
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "vendor@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        profession:
+          type: string
+          example: "Local Manager"
+        
+    UpdateVendorDTO:
+      required:
+        - email
+        - password
+        - first_name
+        - last_name
+        - profession
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "vendor@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        profession:
+          type: string
+          example: "Local Manager"
+          
+    GetVendorDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "vendor@example.com"
+        password:
+          type: string
+          format: password
+        first_name:
+          type: string
+        last_name:
+          type: string
+        profession:
+          type: string
+          example: "Local Manager"
+          
+    CreateAdminDTO:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "admin@example.com"
+        password:
+          type: string
+          format: password
+          
+    UpdateAdminDTO:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "admin@example.com"
+        password:
+          type: string
+          format: password
+    
+    GetAdminDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          example: "admin@example.com"
+        password:
+          type: string
+          format: password
+          
+    BusinessVerificationDTO:
+      required:
+        - businessId
+        - status
+      type: object
+      properties:
+        businessId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: ["pending", "approved", "rejected"]
+          example: "approved"
+        reviewerId:
+          type: string
+          format: uuid
+          description: Administrator verifying the business id.
+        notes:
+          type: string
+          example: "Business verification approved."
+    
+    OrderStatusDTO:
+      required:
+        - orderId
+        - providerId
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: Order id given by the shipping company.
+        providerId:
+          type: string
+          format: uuid
+          description: Provider id registered in the DFS system.
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              giftId:
+                type: string
+                format: uuid
+              quantity:
+                type: integer
+                example: 2
+        status:
+          type: string
+          enum: ["processing", "shipped", "delivered", "cancelled"]
+          example: "shipped"
+# Security removed due to inexperience in swagger, would use JWT bearer
