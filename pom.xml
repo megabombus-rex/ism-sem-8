@@ -112,7 +112,7 @@
                     </goals>
                     <configuration>
                         <inputSpec>
-                            ${basedir}/src/main/resources/openapi/api_doc.yaml
+                            ${basedir}/src/main/resources/openapi/corrected_openapi.yaml
                         </inputSpec>
                         <generatorName>spring</generatorName>
                         <apiPackage>${project.groupId}.api</apiPackage>

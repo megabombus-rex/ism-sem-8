@@ -1,10 +1,7 @@
 package jczech.pwr.ism.ism_lab02.controllers;
 
 import jczech.pwr.ism.api.AdminApi;
-import jczech.pwr.ism.model.BusinessVerificationDTO;
-import jczech.pwr.ism.model.CreateAdminDTO;
-import jczech.pwr.ism.model.GetAdminDTO;
-import jczech.pwr.ism.model.UpdateAdminDTO;
+import jczech.pwr.ism.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -14,11 +11,6 @@ import java.util.UUID;
 
 @RestController
 public class AdminController implements AdminApi {
-
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return AdminApi.super.getRequest();
-    }
 
     @Override
     public ResponseEntity<UUID> _createAdmin(CreateAdminDTO createAdminDTO) {
@@ -51,33 +43,43 @@ public class AdminController implements AdminApi {
     }
 
     @Override
-    public ResponseEntity<Void> _reinstateUserById(UUID userId, String role) {
-        return AdminApi.super._reinstateUserById(userId, role);
+    public ResponseEntity<GetVendorDTO> _getVendorById(UUID vendorId) {
+        return AdminApi.super._getVendorById(vendorId);
     }
 
     @Override
-    public ResponseEntity<Void> reinstateUserById(UUID userId, String role) {
-        return AdminApi.super.reinstateUserById(userId, role);
+    public ResponseEntity<GetVendorDTO> getVendorById(UUID vendorId) {
+        return AdminApi.super.getVendorById(vendorId);
     }
 
     @Override
-    public ResponseEntity<UUID> _signUpA() {
-        return AdminApi.super._signUpA();
+    public ResponseEntity<Void> _reinstateUserById(UUID userId) {
+        return AdminApi.super._reinstateUserById(userId);
     }
 
     @Override
-    public ResponseEntity<UUID> signUpA() {
-        return AdminApi.super.signUpA();
+    public ResponseEntity<Void> reinstateUserById(UUID userId) {
+        return AdminApi.super.reinstateUserById(userId);
     }
 
     @Override
-    public ResponseEntity<Void> _suspendUserById(UUID userId, String role) {
-        return AdminApi.super._suspendUserById(userId, role);
+    public ResponseEntity<UUID> _signUpA(CreateAdminDTO createAdminDTO) {
+        return AdminApi.super._signUpA(createAdminDTO);
     }
 
     @Override
-    public ResponseEntity<Void> suspendUserById(UUID userId, String role) {
-        return AdminApi.super.suspendUserById(userId, role);
+    public ResponseEntity<UUID> signUpA(CreateAdminDTO createAdminDTO) {
+        return AdminApi.super.signUpA(createAdminDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> _suspendUserById(UUID userId) {
+        return AdminApi.super._suspendUserById(userId);
+    }
+
+    @Override
+    public ResponseEntity<Void> suspendUserById(UUID userId) {
+        return AdminApi.super.suspendUserById(userId);
     }
 
     @Override
@@ -88,6 +90,16 @@ public class AdminController implements AdminApi {
     @Override
     public ResponseEntity<Void> updateAdminById(UUID adminId, UpdateAdminDTO updateAdminDTO) {
         return AdminApi.super.updateAdminById(adminId, updateAdminDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> _updateVendorById(UUID vendorId, UpdateVendorDTO updateVendorDTO) {
+        return AdminApi.super._updateVendorById(vendorId, updateVendorDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateVendorById(UUID vendorId, UpdateVendorDTO updateVendorDTO) {
+        return AdminApi.super.updateVendorById(vendorId, updateVendorDTO);
     }
 
     @Override

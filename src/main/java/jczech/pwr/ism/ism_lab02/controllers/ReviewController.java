@@ -1,8 +1,51 @@
 package jczech.pwr.ism.ism_lab02.controllers;
 
 import jczech.pwr.ism.api.ReviewApi;
+import jczech.pwr.ism.model.CreateReviewDTO;
+import jczech.pwr.ism.model.GetGiftReviews201ResponseInner;
+import jczech.pwr.ism.model.GetReviewDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class ReviewController implements ReviewApi {
+    @Override
+    public Optional<NativeWebRequest> getRequest() {
+        return ReviewApi.super.getRequest();
+    }
+
+    @Override
+    public ResponseEntity<List<GetGiftReviews201ResponseInner>> _getGiftReviews(UUID giftId, Integer count, Integer page) {
+        return ReviewApi.super._getGiftReviews(giftId, count, page);
+    }
+
+    @Override
+    public ResponseEntity<List<GetGiftReviews201ResponseInner>> getGiftReviews(UUID giftId, Integer count, Integer page) {
+        return ReviewApi.super.getGiftReviews(giftId, count, page);
+    }
+
+    @Override
+    public ResponseEntity<GetReviewDTO> _getReviewById(UUID reviewId) {
+        return ReviewApi.super._getReviewById(reviewId);
+    }
+
+    @Override
+    public ResponseEntity<GetReviewDTO> getReviewById(UUID reviewId) {
+        return ReviewApi.super.getReviewById(reviewId);
+    }
+
+    @Override
+    public ResponseEntity<Void> _leaveGiftReviewById(UUID giftId, CreateReviewDTO createReviewDTO) {
+        return ReviewApi.super._leaveGiftReviewById(giftId, createReviewDTO);
+    }
+
+    @Override
+    public ResponseEntity<Void> leaveGiftReviewById(UUID giftId, CreateReviewDTO createReviewDTO) {
+        return ReviewApi.super.leaveGiftReviewById(giftId, createReviewDTO);
+    }
 }

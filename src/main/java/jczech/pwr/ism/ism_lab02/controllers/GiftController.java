@@ -21,6 +21,17 @@ import java.util.UUID;
 public class GiftController implements GiftApi {
 
     @Override
+    public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count){
+            var entity = new SearchGiftsByTags200ResponseInner();
+            entity.setTags(tags);
+            entity.setIsService(true);
+            List<SearchGiftsByTags200ResponseInner> list = new ArrayList<SearchGiftsByTags200ResponseInner>();
+
+            list.add(entity);
+        return new ResponseEntity<List<SearchGiftsByTags200ResponseInner>>(list, HttpStatus.OK);
+    }
+
+    @Override
     public Optional<NativeWebRequest> getRequest() {
         return GiftApi.super.getRequest();
     }
@@ -71,17 +82,6 @@ public class GiftController implements GiftApi {
     }
 
     @Override
-    public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count){
-            var entity = new SearchGiftsByTags200ResponseInner();
-            entity.setTags(tags);
-            entity.setIsService(true);
-            List<SearchGiftsByTags200ResponseInner> list = new ArrayList<SearchGiftsByTags200ResponseInner>();
-
-            list.add(entity);
-        return new ResponseEntity<List<SearchGiftsByTags200ResponseInner>>(list, HttpStatus.OK);
-    }
-
-    @Override
     public ResponseEntity<Void> _updateGiftById(UUID businessId, UUID giftId, UpdateGiftDTO updateGiftDTO) {
         return GiftApi.super._updateGiftById(businessId, giftId, updateGiftDTO);
     }
@@ -90,5 +90,4 @@ public class GiftController implements GiftApi {
     public ResponseEntity<Void> updateGiftById(UUID businessId, UUID giftId, UpdateGiftDTO updateGiftDTO) {
         return GiftApi.super.updateGiftById(businessId, giftId, updateGiftDTO);
     }
-
 }
