@@ -2,11 +2,13 @@ package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "shipping_providers")
-public class ShippingProvider {
+@Table(name = "tags")
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public UUID id;
@@ -14,15 +16,19 @@ public class ShippingProvider {
     @Column(name = "name")
     public String name;
 
-    // constructors
-    public ShippingProvider() { }
 
-    public ShippingProvider(String name) {
+    @OneToMany(mappedBy = "tag")
+    @JoinColumn(name = "tag_id")
+    private Set<GiftTag> giftTags = new HashSet<>();
+
+    // constructors
+    public Tag() { }
+
+    public Tag(String name) {
         this.name = name;
     }
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }
@@ -37,5 +43,13 @@ public class ShippingProvider {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<GiftTag> getGiftTags() {
+        return giftTags;
+    }
+
+    public void setGiftTags(Set<GiftTag> giftTags) {
+        this.giftTags = giftTags;
     }
 }
