@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "gift_photos")
-public class GiftPhotos {
+public class GiftPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,9 +19,9 @@ public class GiftPhotos {
     public UUID photoId;
 
     // constructors
-    public GiftPhotos() { }
+    public GiftPhoto() { }
 
-    public GiftPhotos(UUID giftId, UUID photoId) {
+    public GiftPhoto(UUID giftId, UUID photoId) {
         this.giftId = giftId;
         this.photoId = photoId;
     }
