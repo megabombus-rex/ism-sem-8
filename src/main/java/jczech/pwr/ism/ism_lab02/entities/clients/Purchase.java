@@ -1,8 +1,11 @@
 package jczech.pwr.ism.ism_lab02.entities.clients;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
 import org.joda.time.DateTime;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +21,13 @@ public class Purchase {
 
     @Column(name = "purchase_date")
     public DateTime purchaseDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_id")
+    private Gift gift;
+
+    @OneToMany(mappedBy = "purchase")
+    private Set<ClientPurchase> clientPurchases = new HashSet<>();
 
     // constructors
     public Purchase() { }

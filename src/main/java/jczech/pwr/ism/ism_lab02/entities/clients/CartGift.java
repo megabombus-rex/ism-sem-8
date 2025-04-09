@@ -1,12 +1,15 @@
 package jczech.pwr.ism.ism_lab02.entities.clients;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "cart_gifts")
-public class CartGifts {
+public class CartGift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,10 +24,18 @@ public class CartGifts {
     @Column(name = "count")
     public int count;
 
-    // constructors
-    public CartGifts() { }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
+    private ShoppingCart shoppingCart;
 
-    public CartGifts(UUID cartId, UUID giftId, int count) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_id")
+    private Gift gift;
+
+    // constructors
+    public CartGift() { }
+
+    public CartGift(UUID cartId, UUID giftId, int count) {
         this.cartId = cartId;
         this.giftId = giftId;
         this.count = count;

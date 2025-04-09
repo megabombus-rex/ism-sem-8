@@ -1,7 +1,11 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
-import jczech.pwr.ism.ism_lab02.entities.clients.CartGifts;
+import jczech.pwr.ism.ism_lab02.entities.businesses.Business;
+import jczech.pwr.ism.ism_lab02.entities.clients.Purchase;
+import jczech.pwr.ism.ism_lab02.entities.photos.GiftPhoto;
+import jczech.pwr.ism.ism_lab02.entities.reviews.Review;
+import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,8 +40,25 @@ public class Gift {
     private Set<GiftTag> giftTags = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
     private Service service;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gift")
+    private Set<Purchase> purchases = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gift")
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gift")
+    private Set<GiftPhoto> giftPhotos = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    private Business business;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "issuing_vendor_id", referencedColumnName = "id")
+    private Vendor vendor;
 
     // constructors
     public Gift() { }

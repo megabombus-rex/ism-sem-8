@@ -1,6 +1,7 @@
 package jczech.pwr.ism.ism_lab02.entities.photos;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
 
 import java.util.UUID;
 
@@ -17,6 +18,12 @@ public class GiftPhoto {
 
     @Column(name = "photo_id")
     public UUID photoId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private PhotoUrl photoUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Gift gift;
 
     // constructors
     public GiftPhoto() { }

@@ -15,6 +15,14 @@ public class PhotoUrl {
     @Column(name = "photo_url")
     public String photoUrl;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    private GiftPhoto giftPhoto;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    private ReviewPhoto reviewPhoto;
+
     // constructors
     public PhotoUrl() { }
 

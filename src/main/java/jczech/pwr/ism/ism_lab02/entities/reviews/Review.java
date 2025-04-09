@@ -1,7 +1,12 @@
 package jczech.pwr.ism.ism_lab02.entities.reviews;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
+import jczech.pwr.ism.ism_lab02.entities.photos.ReviewPhoto;
+import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,20 +26,31 @@ public class Review {
     @Column(name = "rating")
     public float rating;
 
-    @Column(name = "gift_id")
-    public UUID giftId;
+    @Column(name = "used_gift_id")
+    public UUID usedGiftId;
 
     @Column(name = "author_id")
     public UUID authorId;
 
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
+    private Set<ReviewPhoto> reviewPhotos = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private Client postingClient;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "used_gift_id")
+    private Gift gift;
+
     // constructors
     public Review() { }
 
-    public Review(String title, String description, float rating, UUID giftId, UUID authorId) {
+    public Review(String title, String description, float rating, UUID usedGiftId, UUID authorId) {
         this.title = title;
         this.description = description;
         this.rating = rating;
-        this.giftId = giftId;
+        this.usedGiftId = usedGiftId;
         this.authorId = authorId;
     }
 
@@ -71,12 +87,12 @@ public class Review {
         this.rating = rating;
     }
 
-    public UUID getGiftId() {
-        return giftId;
+    public UUID getUsedGiftId() {
+        return usedGiftId;
     }
 
-    public void setGiftId(UUID giftId) {
-        this.giftId = giftId;
+    public void setUsedGiftId(UUID giftId) {
+        this.usedGiftId = giftId;
     }
 
     public UUID getAuthorId() {

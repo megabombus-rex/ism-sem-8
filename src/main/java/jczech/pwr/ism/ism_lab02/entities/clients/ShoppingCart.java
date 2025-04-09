@@ -1,7 +1,10 @@
 package jczech.pwr.ism.ism_lab02.entities.clients;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +17,13 @@ public class ShoppingCart {
 
     @Column(name = "client_id")
     public UUID clientId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @OneToMany(mappedBy = "shopping_cart", fetch = FetchType.LAZY)
+    private Set<CartGift> cartGifts = new HashSet<>();
 
     // constructors
     public ShoppingCart() { }

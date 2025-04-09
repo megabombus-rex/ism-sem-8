@@ -1,8 +1,11 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.Business;
 import org.joda.time.DateTime;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +28,13 @@ public class Service {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gift_id", referencedColumnName = "id")
     private Gift gift;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "service")
+    private Set<ServiceSchedule> serviceSchedules = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    private Business business;
 
     // constructors
     public Service() { }

@@ -2,6 +2,8 @@ package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +16,9 @@ public class ShippingProvider {
 
     @Column(name = "name")
     public String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shipping_provider")
+    private Set<Order> orders = new HashSet<>();
 
     // constructors
     public ShippingProvider() { }

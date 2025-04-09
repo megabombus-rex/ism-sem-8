@@ -1,7 +1,12 @@
 package jczech.pwr.ism.ism_lab02.entities.users;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.Business;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Order;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +38,15 @@ public class Vendor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
+    private Set<Order> orders = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
+    private Set<Business> businesses = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
+    private Set<Gift> gifts = new HashSet<>();
 
     // constructors
     public Vendor() { }

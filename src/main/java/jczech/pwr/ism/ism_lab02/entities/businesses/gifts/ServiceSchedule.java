@@ -1,6 +1,7 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
 import java.util.UUID;
 
@@ -17,6 +18,15 @@ public class ServiceSchedule {
 
     @Column(name = "client_id")
     public UUID clientId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    private Service service;
+
 
     // constructors
     public ServiceSchedule() { }

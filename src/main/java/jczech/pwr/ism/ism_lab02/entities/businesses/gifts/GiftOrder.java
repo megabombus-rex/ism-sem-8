@@ -18,6 +18,14 @@ public class GiftOrder {
     @Column(name = "gift_id")
     public UUID giftId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_id", referencedColumnName = "id")
+    private Gift gift;
+
     // constructors
     public GiftOrder() { }
 

@@ -1,6 +1,7 @@
 package jczech.pwr.ism.ism_lab02.entities.clients;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
 import java.util.UUID;
 
@@ -17,6 +18,14 @@ public class ClientPurchase {
 
     @Column(name = "purchase_id")
     public UUID purchaseId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     // constructors
     public ClientPurchase() { }

@@ -1,7 +1,10 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +26,17 @@ public class Order {
 
     @Column(name = "status")
     public String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
+    private Vendor vendor;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private Set<GiftOrder> giftOrders = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provider_id")
+    private ShippingProvider shippingProvider;
 
     // constructors
     public Order() { }

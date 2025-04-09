@@ -1,7 +1,14 @@
 package jczech.pwr.ism.ism_lab02.entities.users;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Order;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.ServiceSchedule;
+import jczech.pwr.ism.ism_lab02.entities.clients.ClientPurchase;
+import jczech.pwr.ism.ism_lab02.entities.clients.ShoppingCart;
+import jczech.pwr.ism.ism_lab02.entities.reviews.Review;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +37,23 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private Set<ClientPurchase> clientPurchases = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private ShoppingCart shoppingCart;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private ServiceSchedule serviceSchedule;
 
     // constructors
     public Client() { }

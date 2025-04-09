@@ -1,6 +1,8 @@
 package jczech.pwr.ism.ism_lab02.entities.photos;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
+import jczech.pwr.ism.ism_lab02.entities.reviews.Review;
 
 import java.util.UUID;
 
@@ -17,6 +19,13 @@ public class ReviewPhoto {
 
     @Column(name = "photo_id")
     public UUID photoId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Review review;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    private PhotoUrl photoUrl;
 
     // constructors
     public ReviewPhoto() { }

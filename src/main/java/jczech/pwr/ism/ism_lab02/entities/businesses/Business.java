@@ -1,8 +1,13 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
+import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Service;
+import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 import org.joda.time.DateTime;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -36,6 +41,16 @@ public class Business {
 
     @Column(name = "is_archived")
     public boolean isArchived;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business")
+    private Set<Service> services = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business")
+    private Set<Gift> gifts = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "initial_vendor_id", referencedColumnName = "id")
+    private Vendor vendor;
 
     // constructors
     public Business() { }

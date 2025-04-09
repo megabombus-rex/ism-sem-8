@@ -19,8 +19,12 @@ public class GiftTag {
     public UUID giftId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gift_id")
+    @JoinColumn(name = "gift_id", referencedColumnName = "id")
     private Gift gift;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    private Tag tag;
 
     // constructors
     public GiftTag() {}
