@@ -9,6 +9,7 @@ import java.util.UUID;
 public class ServiceSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "service_id")
@@ -26,7 +27,6 @@ public class ServiceSchedule {
     }
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }

@@ -11,14 +11,14 @@ import java.util.UUID;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "name")
     public String name;
 
 
-    @OneToMany(mappedBy = "tag")
-    @JoinColumn(name = "tag_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tag")
     private Set<GiftTag> giftTags = new HashSet<>();
 
     // constructors

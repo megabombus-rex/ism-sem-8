@@ -9,6 +9,7 @@ import java.util.UUID;
 public class CartGifts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "cart_id")
@@ -19,4 +20,46 @@ public class CartGifts {
 
     @Column(name = "count")
     public int count;
+
+    // constructors
+    public CartGifts() { }
+
+    public CartGifts(UUID cartId, UUID giftId, int count) {
+        this.cartId = cartId;
+        this.giftId = giftId;
+        this.count = count;
+    }
+
+    // getters & setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(UUID cartId) {
+        this.cartId = cartId;
+    }
+
+    public UUID getGiftId() {
+        return giftId;
+    }
+
+    public void setGiftId(UUID giftId) {
+        this.giftId = giftId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

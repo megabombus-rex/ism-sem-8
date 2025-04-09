@@ -9,6 +9,7 @@ import java.util.UUID;
 public class ReviewPhotos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "review_id")
@@ -16,4 +17,37 @@ public class ReviewPhotos {
 
     @Column(name = "photo_id")
     public UUID photoId;
+
+    // constructors
+    public ReviewPhotos() { }
+
+    public ReviewPhotos(UUID reviewId, UUID photoId) {
+        this.reviewId = reviewId;
+        this.photoId = photoId;
+    }
+
+    // getters & setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(UUID reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    public UUID getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(UUID photoId) {
+        this.photoId = photoId;
+    }
 }

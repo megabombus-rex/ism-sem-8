@@ -1,6 +1,7 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.clients.CartGifts;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.UUID;
 public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "business_id", nullable = false)
@@ -30,9 +32,12 @@ public class Gift {
     @Column(name = "is_archived")
     public boolean isArchived;
 
-    @OneToMany(mappedBy = "gift")
-    @JoinColumn(name = "gift_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gift")
     private Set<GiftTag> giftTags = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Service service;
 
     // constructors
     public Gift() { }

@@ -9,6 +9,7 @@ import java.util.UUID;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "vendor_id")
@@ -35,7 +36,6 @@ public class Order {
 
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }

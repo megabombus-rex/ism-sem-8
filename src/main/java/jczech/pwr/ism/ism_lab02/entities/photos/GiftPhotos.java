@@ -9,6 +9,7 @@ import java.util.UUID;
 public class GiftPhotos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "gift_id")
@@ -16,4 +17,37 @@ public class GiftPhotos {
 
     @Column(name = "photo_id")
     public UUID photoId;
+
+    // constructors
+    public GiftPhotos() { }
+
+    public GiftPhotos(UUID giftId, UUID photoId) {
+        this.giftId = giftId;
+        this.photoId = photoId;
+    }
+
+    // getters & setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getGiftId() {
+        return giftId;
+    }
+
+    public void setGiftId(UUID giftId) {
+        this.giftId = giftId;
+    }
+
+    public UUID getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(UUID photoId) {
+        this.photoId = photoId;
+    }
 }

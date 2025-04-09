@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "initial_vendor_id")
@@ -51,7 +52,6 @@ public class Business {
     }
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }

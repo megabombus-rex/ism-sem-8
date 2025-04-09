@@ -9,6 +9,7 @@ import java.util.UUID;
 public class ShippingProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "name")
@@ -22,7 +23,6 @@ public class ShippingProvider {
     }
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }

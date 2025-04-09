@@ -9,6 +9,7 @@ import java.util.UUID;
 public class GiftTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "tag_id")
@@ -16,6 +17,10 @@ public class GiftTag {
 
     @Column(name = "gift_id")
     public UUID giftId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_id")
+    private Gift gift;
 
     // constructors
     public GiftTag() {}

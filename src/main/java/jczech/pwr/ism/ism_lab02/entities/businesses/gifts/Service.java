@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public UUID id;
 
     @Column(name = "gift_id")
@@ -21,6 +22,10 @@ public class Service {
     @Column(name = "start_date")
     public DateTime startDate;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_id", referencedColumnName = "id")
+    private Gift gift;
+
     // constructors
     public Service() { }
 
@@ -31,7 +36,6 @@ public class Service {
     }
 
     // getters & setters
-
     public UUID getId() {
         return id;
     }
