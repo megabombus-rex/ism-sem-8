@@ -1,6 +1,7 @@
 package jczech.pwr.ism.ism_lab02.entities.clients;
 
 import jakarta.persistence.*;
+import org.joda.time.DateTime;
 
 import java.util.UUID;
 
@@ -14,6 +15,9 @@ public class Purchase {
 
     @Column(name = "gift_id")
     public UUID giftId;
+
+    @Column(name = "purchase_date")
+    public DateTime purchaseDate;
 
     // constructors
     public Purchase() { }

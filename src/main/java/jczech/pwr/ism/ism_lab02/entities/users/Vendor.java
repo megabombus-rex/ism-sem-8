@@ -30,6 +30,10 @@ public class Vendor {
     @Column(name = "role_id")
     public UUID roleId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     // constructors
     public Vendor() { }
 

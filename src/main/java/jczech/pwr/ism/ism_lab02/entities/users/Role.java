@@ -2,6 +2,8 @@ package jczech.pwr.ism.ism_lab02.entities.users;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,6 +16,17 @@ public class Role {
 
     @Column(name = "name")
     public String name;
+
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<Client> clients = new HashSet<>();
+
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<Vendor> vendors = new HashSet<>();
+
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<Admin> admins = new HashSet<>();
+
+
 
     // constructors
     public Role() { }
