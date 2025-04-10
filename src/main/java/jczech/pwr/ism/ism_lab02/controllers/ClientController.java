@@ -18,18 +18,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ResponseEntity<Void> _updateClientById(UUID clientId, UpdateClientDTO updateClientDTO) {
-        return ClientApi.super._updateClientById(clientId, updateClientDTO);
-    }
-
-    @Override
     public ResponseEntity<UUID> signUpC(CreateClientDTO createClientDTO) {
         return ClientApi.super.signUpC(createClientDTO);
-    }
-
-    @Override
-    public ResponseEntity<UUID> _signUpC(CreateClientDTO createClientDTO) {
-        return ClientApi.super._signUpC(createClientDTO);
     }
 
     @Override
@@ -38,18 +28,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ResponseEntity<GetClientDTO> _getClientById(UUID clientId) {
-        return ClientApi.super._getClientById(clientId);
-    }
-
-    @Override
     public ResponseEntity<GetClientDTO> getClientAccount(String clientId) {
         return ClientApi.super.getClientAccount(clientId);
-    }
-
-    @Override
-    public ResponseEntity<GetClientDTO> _getClientAccount(String clientId) {
-        return ClientApi.super._getClientAccount(clientId);
     }
 
     @Override
@@ -58,18 +38,8 @@ public class ClientController implements ClientApi {
     }
 
     @Override
-    public ResponseEntity<List<GetAllClients200ResponseInner>> _getAllClients(Integer page, Integer count, String clientName) {
-        return ClientApi.super._getAllClients(page, count, clientName);
-    }
-
-    @Override
     public ResponseEntity<List<GetAllAdmins200ResponseInner>> getAllAdmins(Integer page, Integer count, String adminName) {
         return ClientApi.super.getAllAdmins(page, count, adminName);
-    }
-
-    @Override
-    public ResponseEntity<List<GetAllAdmins200ResponseInner>> _getAllAdmins(Integer page, Integer count, String adminName) {
-        return ClientApi.super._getAllAdmins(page, count, adminName);
     }
 
     @Override
@@ -77,8 +47,4 @@ public class ClientController implements ClientApi {
         return ClientApi.super.createClient(createClientDTO);
     }
 
-    @Override
-    public ResponseEntity<UUID> _createClient(CreateClientDTO createClientDTO) {
-        return ClientApi.super._createClient(createClientDTO);
-    }
 }

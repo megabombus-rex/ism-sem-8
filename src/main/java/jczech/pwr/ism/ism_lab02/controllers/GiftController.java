@@ -32,33 +32,13 @@ public class GiftController implements GiftApi {
     }
 
     @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return GiftApi.super.getRequest();
-    }
-
-    @Override
-    public ResponseEntity<OffsetDateTime> _claimGift(UUID giftId, UUID clientId) {
-        return GiftApi.super._claimGift(giftId, clientId);
-    }
-
-    @Override
     public ResponseEntity<OffsetDateTime> claimGift(UUID giftId, UUID clientId) {
         return GiftApi.super.claimGift(giftId, clientId);
     }
 
     @Override
-    public ResponseEntity<Void> _createGift(UUID businessId, CreateGiftDTO createGiftDTO) {
-        return GiftApi.super._createGift(businessId, createGiftDTO);
-    }
-
-    @Override
     public ResponseEntity<Void> createGift(UUID businessId, CreateGiftDTO createGiftDTO) {
         return GiftApi.super.createGift(businessId, createGiftDTO);
-    }
-
-    @Override
-    public ResponseEntity<List<GetClientSchedule200ResponseInner>> _getBusinessSchedule(UUID businessId) {
-        return GiftApi.super._getBusinessSchedule(businessId);
     }
 
     @Override
@@ -79,11 +59,6 @@ public class GiftController implements GiftApi {
     @Override
     public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> _searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count) {
         return GiftApi.super._searchGiftsByTags(tags, priceRangeMin, priceRangeMax, page, count);
-    }
-
-    @Override
-    public ResponseEntity<Void> _updateGiftById(UUID businessId, UUID giftId, UpdateGiftDTO updateGiftDTO) {
-        return GiftApi.super._updateGiftById(businessId, giftId, updateGiftDTO);
     }
 
     @Override

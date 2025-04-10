@@ -18,18 +18,8 @@ public class PurchaseController implements PurchaseApi {
     }
 
     @Override
-    public ResponseEntity<Void> _addItemToClientCart(UUID clientId, UUID body) {
-        return PurchaseApi.super._addItemToClientCart(clientId, body);
-    }
-
-    @Override
     public ResponseEntity<Void> addItemToClientCart(UUID clientId, UUID body) {
         return PurchaseApi.super.addItemToClientCart(clientId, body);
-    }
-
-    @Override
-    public ResponseEntity<Void> _addItemToClientCartById(UUID clientId, UUID giftId) {
-        return PurchaseApi.super._addItemToClientCartById(clientId, giftId);
     }
 
     @Override
@@ -38,18 +28,8 @@ public class PurchaseController implements PurchaseApi {
     }
 
     @Override
-    public ResponseEntity<Void> _getClientCart(UUID clientId) {
-        return PurchaseApi.super._getClientCart(clientId);
-    }
-
-    @Override
     public ResponseEntity<Void> getClientCart(UUID clientId) {
         return PurchaseApi.super.getClientCart(clientId);
-    }
-
-    @Override
-    public ResponseEntity<GetGiftDTO> _getClientPurchases(UUID clientId, LocalDate dateFrom, LocalDate dateTo, Integer page, Integer count) {
-        return PurchaseApi.super._getClientPurchases(clientId, dateFrom, dateTo, page, count);
     }
 
     @Override

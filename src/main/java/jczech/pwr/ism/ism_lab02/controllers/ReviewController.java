@@ -20,28 +20,13 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
-    public ResponseEntity<List<GetGiftReviews201ResponseInner>> _getGiftReviews(UUID giftId, Integer count, Integer page) {
-        return ReviewApi.super._getGiftReviews(giftId, count, page);
-    }
-
-    @Override
     public ResponseEntity<List<GetGiftReviews201ResponseInner>> getGiftReviews(UUID giftId, Integer count, Integer page) {
         return ReviewApi.super.getGiftReviews(giftId, count, page);
     }
 
     @Override
-    public ResponseEntity<GetReviewDTO> _getReviewById(UUID reviewId) {
-        return ReviewApi.super._getReviewById(reviewId);
-    }
-
-    @Override
     public ResponseEntity<GetReviewDTO> getReviewById(UUID reviewId) {
         return ReviewApi.super.getReviewById(reviewId);
-    }
-
-    @Override
-    public ResponseEntity<Void> _leaveGiftReviewById(UUID giftId, CreateReviewDTO createReviewDTO) {
-        return ReviewApi.super._leaveGiftReviewById(giftId, createReviewDTO);
     }
 
     @Override

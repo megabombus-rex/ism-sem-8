@@ -11,15 +11,6 @@ import java.util.UUID;
 
 @RestController
 public class ServiceController implements ServiceApi {
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return ServiceApi.super.getRequest();
-    }
-
-    @Override
-    public ResponseEntity<Void> _updateServiceById(UUID businessId, UUID serviceId, UpdateServiceDTO updateServiceDTO) {
-        return ServiceApi.super._updateServiceById(businessId, serviceId, updateServiceDTO);
-    }
 
     @Override
     public ResponseEntity<Void> updateServiceById(UUID businessId, UUID serviceId, UpdateServiceDTO updateServiceDTO) {

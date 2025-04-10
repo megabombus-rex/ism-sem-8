@@ -2,8 +2,12 @@ package jczech.pwr.ism.ism_lab02.repositories;
 
 import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.GiftTag;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface GiftTagRepository extends JpaRepository<GiftTag, UUID> {
+    @Query(value = "SELECT gt.tag_id from gift_tags as gt", nativeQuery = true)
+    public List<GiftTag> findByGiftId(UUID giftId);
 }
