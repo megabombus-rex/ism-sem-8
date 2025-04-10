@@ -59,4 +59,20 @@ public class ReviewPhoto {
     public void setPhotoId(UUID photoId) {
         this.photoId = photoId;
     }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public PhotoUrl getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(PhotoUrl photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 }

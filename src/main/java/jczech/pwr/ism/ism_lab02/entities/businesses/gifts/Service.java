@@ -77,4 +77,28 @@ public class Service {
     public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
+
+    public Set<ServiceSchedule> getServiceSchedules() {
+        return serviceSchedules;
+    }
+
+    public void setServiceSchedules(Set<ServiceSchedule> serviceSchedules) {
+        this.serviceSchedules = serviceSchedules;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
 }

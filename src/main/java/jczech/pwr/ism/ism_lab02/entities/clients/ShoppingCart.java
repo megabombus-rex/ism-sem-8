@@ -48,4 +48,20 @@ public class ShoppingCart {
     public void setClientId(UUID clientId) {
         this.clientId = clientId;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<CartGift> getCartGifts() {
+        return cartGifts;
+    }
+
+    public void setCartGifts(Set<CartGift> cartGifts) {
+        this.cartGifts = cartGifts;
+    }
 }

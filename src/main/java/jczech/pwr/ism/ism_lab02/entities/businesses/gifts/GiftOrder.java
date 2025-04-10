@@ -59,4 +59,20 @@ public class GiftOrder {
     public void setGiftId(UUID giftId) {
         this.giftId = giftId;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
 }

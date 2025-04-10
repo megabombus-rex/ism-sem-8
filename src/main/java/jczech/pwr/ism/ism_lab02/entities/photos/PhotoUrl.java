@@ -46,4 +46,20 @@ public class PhotoUrl {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    public GiftPhoto getGiftPhoto() {
+        return giftPhoto;
+    }
+
+    public void setGiftPhoto(GiftPhoto giftPhoto) {
+        this.giftPhoto = giftPhoto;
+    }
+
+    public ReviewPhoto getReviewPhoto() {
+        return reviewPhoto;
+    }
+
+    public void setReviewPhoto(ReviewPhoto reviewPhoto) {
+        this.reviewPhoto = reviewPhoto;
+    }
 }

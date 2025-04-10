@@ -58,4 +58,20 @@ public class GiftTag {
     public void setGiftId(UUID giftId) {
         this.giftId = giftId;
     }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
 }

@@ -57,4 +57,20 @@ public class GiftPhoto {
     public void setPhotoId(UUID photoId) {
         this.photoId = photoId;
     }
+
+    public PhotoUrl getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(PhotoUrl photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
 }

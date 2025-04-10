@@ -89,4 +89,28 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
+
+    public Set<GiftOrder> getGiftOrders() {
+        return giftOrders;
+    }
+
+    public void setGiftOrders(Set<GiftOrder> giftOrders) {
+        this.giftOrders = giftOrders;
+    }
+
+    public ShippingProvider getShippingProvider() {
+        return shippingProvider;
+    }
+
+    public void setShippingProvider(ShippingProvider shippingProvider) {
+        this.shippingProvider = shippingProvider;
+    }
 }

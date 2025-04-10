@@ -52,4 +52,28 @@ public class Purchase {
     public void setGiftId(UUID giftId) {
         this.giftId = giftId;
     }
+
+    public DateTime getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(DateTime purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
+
+    public Set<ClientPurchase> getClientPurchases() {
+        return clientPurchases;
+    }
+
+    public void setClientPurchases(Set<ClientPurchase> clientPurchases) {
+        this.clientPurchases = clientPurchases;
+    }
 }

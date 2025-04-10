@@ -102,4 +102,28 @@ public class Review {
     public void setAuthorId(UUID authorId) {
         this.authorId = authorId;
     }
+
+    public Set<ReviewPhoto> getReviewPhotos() {
+        return reviewPhotos;
+    }
+
+    public void setReviewPhotos(Set<ReviewPhoto> reviewPhotos) {
+        this.reviewPhotos = reviewPhotos;
+    }
+
+    public Client getPostingClient() {
+        return postingClient;
+    }
+
+    public void setPostingClient(Client postingClient) {
+        this.postingClient = postingClient;
+    }
+
+    public Gift getGift() {
+        return gift;
+    }
+
+    public void setGift(Gift gift) {
+        this.gift = gift;
+    }
 }

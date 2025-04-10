@@ -59,4 +59,20 @@ public class ClientPurchase {
     public void setPurchaseId(UUID purchaseId) {
         this.purchaseId = purchaseId;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
 }

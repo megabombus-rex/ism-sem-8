@@ -60,4 +60,20 @@ public class ServiceSchedule {
     public void setClientId(UUID clientId) {
         this.clientId = clientId;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 }

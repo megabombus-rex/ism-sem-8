@@ -90,4 +90,12 @@ public class Admin {
     public void setRoleId(UUID roleId) {
         this.roleId = roleId;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

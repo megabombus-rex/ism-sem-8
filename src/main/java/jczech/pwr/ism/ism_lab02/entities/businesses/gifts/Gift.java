@@ -74,6 +74,15 @@ public class Gift {
     }
 
     // getters & setters
+
+    public UUID getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(UUID businessId) {
+        this.businessId = businessId;
+    }
+
     public String getName() {
         return name;
     }
@@ -120,5 +129,61 @@ public class Gift {
 
     public void setGiftTags(Set<GiftTag> giftTags) {
         this.giftTags = giftTags;
+    }
+
+    public UUID getIssuingVendorId() {
+        return issuingVendorId;
+    }
+
+    public void setIssuingVendorId(UUID issuingVendorId) {
+        this.issuingVendorId = issuingVendorId;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public Set<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Set<GiftPhoto> getGiftPhotos() {
+        return giftPhotos;
+    }
+
+    public void setGiftPhotos(Set<GiftPhoto> giftPhotos) {
+        this.giftPhotos = giftPhotos;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 }

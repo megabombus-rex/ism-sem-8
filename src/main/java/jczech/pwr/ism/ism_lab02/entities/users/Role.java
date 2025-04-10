@@ -51,4 +51,28 @@ public class Role {
     public void setId(UUID id) {
         this.id = id;
     }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
+    }
+
+    public Set<Vendor> getVendors() {
+        return vendors;
+    }
+
+    public void setVendors(Set<Vendor> vendors) {
+        this.vendors = vendors;
+    }
+
+    public Set<Admin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(Set<Admin> admins) {
+        this.admins = admins;
+    }
 }

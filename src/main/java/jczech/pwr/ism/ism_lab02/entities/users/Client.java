@@ -114,4 +114,52 @@ public class Client {
     public void setRoleId(UUID roleId) {
         this.roleId = roleId;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Set<ClientPurchase> getClientPurchases() {
+        return clientPurchases;
+    }
+
+    public void setClientPurchases(Set<ClientPurchase> clientPurchases) {
+        this.clientPurchases = clientPurchases;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public ServiceSchedule getServiceSchedule() {
+        return serviceSchedule;
+    }
+
+    public void setServiceSchedule(ServiceSchedule serviceSchedule) {
+        this.serviceSchedule = serviceSchedule;
+    }
 }
