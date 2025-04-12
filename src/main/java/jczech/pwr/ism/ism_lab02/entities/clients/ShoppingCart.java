@@ -5,7 +5,7 @@ import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "shopping_carts")
@@ -13,39 +13,39 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "client_id")
-    public UUID clientId;
+    public Long clientId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Client client;
 
-    @OneToMany(mappedBy = "shopping_cart", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.LAZY)
     private Set<CartGift> cartGifts = new HashSet<>();
 
     // constructors
     public ShoppingCart() { }
 
-    public ShoppingCart(UUID clientId) {
+    public ShoppingCart(Long clientId) {
         this.clientId = clientId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(UUID clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
 

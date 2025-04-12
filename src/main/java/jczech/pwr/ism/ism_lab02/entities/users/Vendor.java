@@ -7,7 +7,7 @@ import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Order;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "vendors")
@@ -15,7 +15,7 @@ public class Vendor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "position")
     public String position;
@@ -33,10 +33,10 @@ public class Vendor {
     public String passwordHash;
 
     @Column(name = "role_id")
-    public UUID roleId;
+    public Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor")
@@ -51,7 +51,7 @@ public class Vendor {
     // constructors
     public Vendor() { }
 
-    public Vendor(String position, String firstName, String lastName, String emailAddress, String passwordHash, UUID roleId) {
+    public Vendor(String position, String firstName, String lastName, String emailAddress, String passwordHash, Long roleId) {
         this.position = position;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,11 +61,11 @@ public class Vendor {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -109,11 +109,11 @@ public class Vendor {
         this.passwordHash = passwordHash;
     }
 
-    public UUID getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(UUID roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

@@ -2,7 +2,7 @@ package jczech.pwr.ism.ism_lab02.entities.photos;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "photo_urls")
@@ -10,17 +10,17 @@ public class PhotoUrl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "photo_url")
     public String photoUrl;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    @JoinColumn(name = "photo_id", referencedColumnName = "id", insertable = false, updatable = false)
     private GiftPhoto giftPhoto;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    @JoinColumn(name = "photo_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ReviewPhoto reviewPhoto;
 
     // constructors
@@ -31,11 +31,11 @@ public class PhotoUrl {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

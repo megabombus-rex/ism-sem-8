@@ -3,61 +3,59 @@ package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 import jakarta.persistence.*;
 import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "service_schedules")
 public class ServiceSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "service_id")
-    public UUID serviceId;
+    public Long serviceId;
 
     @Column(name = "client_id")
-    public UUID clientId;
+    public Long clientId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @JoinColumn(name = "service_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Service service;
 
 
     // constructors
     public ServiceSchedule() { }
 
-    public ServiceSchedule(UUID serviceId, UUID clientId) {
+    public ServiceSchedule(Long serviceId, Long clientId) {
         this.serviceId = serviceId;
         this.clientId = clientId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getServiceId() {
+    public Long getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(UUID serviceId) {
+    public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
     }
 
-    public UUID getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(UUID clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
 

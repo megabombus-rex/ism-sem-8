@@ -1,11 +1,12 @@
 package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
+import jczech.pwr.ism.ism_lab02.entities.users.Client;
 import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "orders")
@@ -13,35 +14,39 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "vendor_id")
-    public UUID vendorId;
+    public Long vendorId;
 
     @Column(name = "client_id")
-    public UUID clientId;
+    public Long clientId;
 
     @Column(name = "provider_id")
-    public UUID providerId;
+    public Long providerId;
 
     @Column(name = "status")
     public String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Vendor vendor;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private Set<GiftOrder> giftOrders = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "provider_id")
+    @JoinColumn(name = "provider_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ShippingProvider shippingProvider;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Client client;
 
     // constructors
     public Order() { }
 
-    public Order(UUID vendorId, UUID clientId, UUID providerId, String status) {
+    public Order(Long vendorId, Long clientId, Long providerId, String status) {
         this.vendorId = vendorId;
         this.clientId = clientId;
         this.providerId = providerId;
@@ -50,35 +55,35 @@ public class Order {
 
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getVendorId() {
+    public Long getVendorId() {
         return vendorId;
     }
 
-    public void setVendorId(UUID vendorId) {
+    public void setVendorId(Long vendorId) {
         this.vendorId = vendorId;
     }
 
-    public UUID getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(UUID clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
 
-    public UUID getProviderId() {
+    public Long getProviderId() {
         return providerId;
     }
 
-    public void setProviderId(UUID providerId) {
+    public void setProviderId(Long providerId) {
         this.providerId = providerId;
     }
 

@@ -9,7 +9,7 @@ import jczech.pwr.ism.ism_lab02.entities.reviews.Review;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "clients")
@@ -17,7 +17,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "first_name")
     public String firstName;
@@ -32,33 +32,33 @@ public class Client {
     public String passwordHash;
 
     @Column(name = "role_id")
-    public UUID roleId;
+    public Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private Role role;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<ClientPurchase> clientPurchases = new HashSet<>();
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "postingClient", fetch = FetchType.LAZY)
     private Set<Review> reviews = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ShoppingCart shoppingCart;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private Set<Order> orders = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
     private ServiceSchedule serviceSchedule;
 
     // constructors
     public Client() { }
 
-    public Client(String firstName, String lastName, String emailAddress, String passwordHash, UUID roleId) {
+    public Client(String firstName, String lastName, String emailAddress, String passwordHash, Long roleId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -67,11 +67,11 @@ public class Client {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -107,11 +107,11 @@ public class Client {
         this.passwordHash = passwordHash;
     }
 
-    public UUID getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(UUID roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

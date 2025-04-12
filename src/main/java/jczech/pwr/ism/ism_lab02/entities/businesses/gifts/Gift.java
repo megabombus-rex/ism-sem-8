@@ -9,7 +9,7 @@ import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "gifts")
@@ -17,13 +17,13 @@ public class Gift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
-    @Column(name = "business_id", nullable = false)
-    public UUID businessId;
+    @Column(name = "business_id")
+    public Long businessId;
 
-    @Column(name = "issuing_vendor_id", nullable = false)
-    public UUID issuingVendorId;
+    @Column(name = "issuing_vendor_id")
+    public Long issuingVendorId;
 
     @Column(name = "name")
     public String name;
@@ -40,7 +40,7 @@ public class Gift {
     private Set<GiftTag> giftTags = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @JoinColumn(name = "service_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Service service;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "gift")
@@ -53,17 +53,17 @@ public class Gift {
     private Set<GiftPhoto> giftPhotos = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    @JoinColumn(name = "business_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Business business;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issuing_vendor_id", referencedColumnName = "id")
+    @JoinColumn(name = "issuing_vendor_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Vendor vendor;
 
     // constructors
     public Gift() { }
 
-    public Gift(UUID businessId, UUID issuingVendorId, String name, String description, float priceInPln, boolean isService, boolean isArchived) {
+    public Gift(Long businessId, Long issuingVendorId, String name, String description, float priceInPln, boolean isService, boolean isArchived) {
         this.businessId = businessId;
         this.issuingVendorId = issuingVendorId;
         this.name = name;
@@ -75,11 +75,20 @@ public class Gift {
 
     // getters & setters
 
-    public UUID getBusinessId() {
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(UUID businessId) {
+    public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
 
@@ -131,11 +140,11 @@ public class Gift {
         this.giftTags = giftTags;
     }
 
-    public UUID getIssuingVendorId() {
+    public Long getIssuingVendorId() {
         return issuingVendorId;
     }
 
-    public void setIssuingVendorId(UUID issuingVendorId) {
+    public void setIssuingVendorId(Long issuingVendorId) {
         this.issuingVendorId = issuingVendorId;
     }
 

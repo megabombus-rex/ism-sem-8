@@ -2,7 +2,7 @@ package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "gift_tags")
@@ -10,52 +10,52 @@ public class GiftTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "tag_id")
-    public UUID tagId;
+    public Long tagId;
 
     @Column(name = "gift_id")
-    public UUID giftId;
+    public Long giftId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gift_id", referencedColumnName = "id")
+    @JoinColumn(name = "gift_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Gift gift;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    @JoinColumn(name = "tag_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Tag tag;
 
     // constructors
     public GiftTag() {}
 
-    public GiftTag(UUID tagId, UUID giftId) {
+    public GiftTag(Long tagId, Long giftId) {
         this.tagId = tagId;
         this.giftId = giftId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(UUID tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 
-    public UUID getGiftId() {
+    public Long getGiftId() {
         return giftId;
     }
 
-    public void setGiftId(UUID giftId) {
+    public void setGiftId(Long giftId) {
         this.giftId = giftId;
     }
 

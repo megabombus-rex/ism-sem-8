@@ -2,7 +2,7 @@ package jczech.pwr.ism.ism_lab02.entities.users;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "admins")
@@ -10,7 +10,7 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "first_name")
     public String firstName;
@@ -25,16 +25,16 @@ public class Admin {
     public String passwordHash;
 
     @Column(name = "role_id")
-    public UUID roleId;
+    public Long roleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private Role role;
 
     // constructors
     public Admin() { }
 
-    public Admin(String firstName, String lastName, String emailAddress, String passwordHash, UUID roleId) {
+    public Admin(String firstName, String lastName, String emailAddress, String passwordHash, Long roleId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -43,11 +43,11 @@ public class Admin {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,11 +83,11 @@ public class Admin {
         this.passwordHash = passwordHash;
     }
 
-    public UUID getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(UUID roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

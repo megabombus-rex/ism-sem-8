@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Gift;
 import jczech.pwr.ism.ism_lab02.entities.reviews.Review;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "review_photos")
@@ -12,51 +12,52 @@ public class ReviewPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "review_id")
-    public UUID reviewId;
+    public Long reviewId;
 
     @Column(name = "photo_id")
-    public UUID photoId;
+    public Long photoId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Review review;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    @JoinColumn(name = "photo_id", referencedColumnName = "id", insertable = false, updatable = false)
     private PhotoUrl photoUrl;
 
     // constructors
     public ReviewPhoto() { }
 
-    public ReviewPhoto(UUID reviewId, UUID photoId) {
+    public ReviewPhoto(Long reviewId, Long photoId) {
         this.reviewId = reviewId;
         this.photoId = photoId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getReviewId() {
+    public Long getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(UUID reviewId) {
+    public void setReviewId(Long reviewId) {
         this.reviewId = reviewId;
     }
 
-    public UUID getPhotoId() {
+    public Long getPhotoId() {
         return photoId;
     }
 
-    public void setPhotoId(UUID photoId) {
+    public void setPhotoId(Long photoId) {
         this.photoId = photoId;
     }
 

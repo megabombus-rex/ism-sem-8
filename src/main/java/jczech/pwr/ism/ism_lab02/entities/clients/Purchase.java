@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "purchases")
@@ -14,16 +14,16 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "gift_id")
-    public UUID giftId;
+    public Long giftId;
 
     @Column(name = "purchase_date")
     public DateTime purchaseDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gift_id")
+    @JoinColumn(name = "gift_id", insertable = false, updatable = false)
     private Gift gift;
 
     @OneToMany(mappedBy = "purchase")
@@ -32,24 +32,24 @@ public class Purchase {
     // constructors
     public Purchase() { }
 
-    public Purchase(UUID giftId) {
+    public Purchase(Long giftId) {
         this.giftId = giftId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getGiftId() {
+    public Long getGiftId() {
         return giftId;
     }
 
-    public void setGiftId(UUID giftId) {
+    public void setGiftId(Long giftId) {
         this.giftId = giftId;
     }
 

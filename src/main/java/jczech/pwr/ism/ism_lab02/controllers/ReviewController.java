@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RestController
 public class ReviewController implements ReviewApi {
@@ -20,17 +20,17 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
-    public ResponseEntity<List<GetGiftReviews201ResponseInner>> getGiftReviews(UUID giftId, Integer count, Integer page) {
+    public ResponseEntity<List<GetGiftReviews201ResponseInner>> getGiftReviews(Long giftId, Integer count, Integer page) {
         return ReviewApi.super.getGiftReviews(giftId, count, page);
     }
 
     @Override
-    public ResponseEntity<GetReviewDTO> getReviewById(UUID reviewId) {
+    public ResponseEntity<GetReviewDTO> getReviewById(Long reviewId) {
         return ReviewApi.super.getReviewById(reviewId);
     }
 
     @Override
-    public ResponseEntity<Void> leaveGiftReviewById(UUID giftId, CreateReviewDTO createReviewDTO) {
+    public ResponseEntity<Void> leaveGiftReviewById(Long giftId, CreateReviewDTO createReviewDTO) {
         return ReviewApi.super.leaveGiftReviewById(giftId, createReviewDTO);
     }
 }

@@ -6,9 +6,10 @@ import jczech.pwr.ism.ism_lab02.entities.businesses.gifts.Service;
 import jczech.pwr.ism.ism_lab02.entities.users.Vendor;
 import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "businesses")
@@ -16,13 +17,13 @@ public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "initial_vendor_id")
-    public UUID initialVendorId;
+    public Long initialVendorId;
 
     @Column(name = "verification_timestamp")
-    public DateTime verificationTimestamp;
+    public Timestamp verificationTimestamp;
 
     @Column(name = "name")
     public String name;
@@ -49,13 +50,13 @@ public class Business {
     private Set<Gift> gifts = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "initial_vendor_id", referencedColumnName = "id")
+    @JoinColumn(name = "initial_vendor_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Vendor vendor;
 
     // constructors
     public Business() { }
 
-    public Business(UUID initialVendorId, DateTime verificationTimestamp, String name, String emailAddress, String phoneNumber, String websiteUrl, boolean isVerified, boolean isArchived) {
+    public Business(Long initialVendorId, Timestamp verificationTimestamp, String name, String emailAddress, String phoneNumber, String websiteUrl, boolean isVerified, boolean isArchived) {
         this.initialVendorId = initialVendorId;
         this.verificationTimestamp = verificationTimestamp;
         this.name = name;
@@ -67,27 +68,27 @@ public class Business {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getInitialVendorId() {
+    public Long getInitialVendorId() {
         return initialVendorId;
     }
 
-    public void setInitialVendorId(UUID initialVendorId) {
+    public void setInitialVendorId(Long initialVendorId) {
         this.initialVendorId = initialVendorId;
     }
 
-    public DateTime getVerificationTimestamp() {
+    public Timestamp getVerificationTimestamp() {
         return verificationTimestamp;
     }
 
-    public void setVerificationTimestamp(DateTime verificationTimestamp) {
+    public void setVerificationTimestamp(Timestamp verificationTimestamp) {
         this.verificationTimestamp = verificationTimestamp;
     }
 

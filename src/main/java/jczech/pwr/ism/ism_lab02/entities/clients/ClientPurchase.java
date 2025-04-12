@@ -3,7 +3,7 @@ package jczech.pwr.ism.ism_lab02.entities.clients;
 import jakarta.persistence.*;
 import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "client_purchases")
@@ -11,52 +11,52 @@ public class ClientPurchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "client_id")
-    public UUID clientId;
+    public Long clientId;
 
     @Column(name = "purchase_id")
-    public UUID purchaseId;
+    public Long purchaseId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", insertable = false, updatable = false)
     private Purchase purchase;
 
     // constructors
     public ClientPurchase() { }
 
-    public ClientPurchase(UUID clientId, UUID purchaseId) {
+    public ClientPurchase(Long clientId, Long purchaseId) {
         this.clientId = clientId;
         this.purchaseId = purchaseId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getClientId() {
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(UUID clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
 
-    public UUID getPurchaseId() {
+    public Long getPurchaseId() {
         return purchaseId;
     }
 
-    public void setPurchaseId(UUID purchaseId) {
+    public void setPurchaseId(Long purchaseId) {
         this.purchaseId = purchaseId;
     }
 

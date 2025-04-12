@@ -7,7 +7,7 @@ import jczech.pwr.ism.ism_lab02.entities.users.Client;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "reviews")
@@ -15,7 +15,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "title")
     public String title;
@@ -27,26 +27,26 @@ public class Review {
     public float rating;
 
     @Column(name = "used_gift_id")
-    public UUID usedGiftId;
+    public Long usedGiftId;
 
     @Column(name = "author_id")
-    public UUID authorId;
+    public Long authorId;
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
     private Set<ReviewPhoto> reviewPhotos = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
     private Client postingClient;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "used_gift_id")
+    @JoinColumn(name = "used_gift_id", insertable = false, updatable = false)
     private Gift gift;
 
     // constructors
     public Review() { }
 
-    public Review(String title, String description, float rating, UUID usedGiftId, UUID authorId) {
+    public Review(String title, String description, float rating, Long usedGiftId, Long authorId) {
         this.title = title;
         this.description = description;
         this.rating = rating;
@@ -55,11 +55,11 @@ public class Review {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -87,19 +87,19 @@ public class Review {
         this.rating = rating;
     }
 
-    public UUID getUsedGiftId() {
+    public Long getUsedGiftId() {
         return usedGiftId;
     }
 
-    public void setUsedGiftId(UUID giftId) {
+    public void setUsedGiftId(Long giftId) {
         this.usedGiftId = giftId;
     }
 
-    public UUID getAuthorId() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(UUID authorId) {
+    public void setAuthorId(Long authorId) {
         this.authorId = authorId;
     }
 

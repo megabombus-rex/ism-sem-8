@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "shipping_providers")
@@ -12,12 +12,12 @@ public class ShippingProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "name")
     public String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shipping_provider")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shippingProvider")
     private Set<Order> orders = new HashSet<>();
 
     // constructors
@@ -28,11 +28,11 @@ public class ShippingProvider {
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

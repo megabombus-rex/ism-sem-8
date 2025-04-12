@@ -1,10 +1,12 @@
 package jczech.pwr.ism.ism_lab02.controllers;
 
 import jczech.pwr.ism.api.GiftApi;
+import jczech.pwr.ism.ism_lab02.services.GiftService;
 import jczech.pwr.ism.model.CreateGiftDTO;
 import jczech.pwr.ism.model.GetClientSchedule200ResponseInner;
 import jczech.pwr.ism.model.SearchGiftsByTags200ResponseInner;
 import jczech.pwr.ism.model.UpdateGiftDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,44 +17,64 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RestController
 public class GiftController implements GiftApi {
 
+    @Autowired
+    GiftService giftService;
+
     @Override
     public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count){
-            var entity = new SearchGiftsByTags200ResponseInner();
-            entity.setTags(tags);
-            entity.setIsService(true);
-            List<SearchGiftsByTags200ResponseInner> list = new ArrayList<SearchGiftsByTags200ResponseInner>();
+        var list = giftService.getGiftsByTags(tags, priceRangeMin.floatValue(), priceRangeMax.floatValue(), page, count);
 
-            list.add(entity);
-        return new ResponseEntity<List<SearchGiftsByTags200ResponseInner>>(list, HttpStatus.OK);
+        if (list.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        var translatedList = new ArrayList<SearchGiftsByTags200ResponseInner>();
+
+        for (int i = 0; i < list.size(); i++) {
+            var translated = new SearchGiftsByTags200ResponseInner();
+
+            translated.setGiftId(list.get(i).getGiftId());
+            translated.setName(list.get(i).getName());
+            translated.setGiftDescription(list.get(i).getGiftDescription());
+            translated.setBusinessId(list.get(i).getBusinessId());
+            translated.setIssuingVendorId(list.get(i).getIssuingVendorId());
+            translated.setIsService(list.get(i).getIsService());
+            translated.setCostInPln(list.get(i).getCostInPln());
+            translated.setIsArchived(list.get(i).getIsArchived());
+            translated.setTags(list.get(i).getTags());
+
+            translatedList.add(translated);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(translatedList);
     }
 
     @Override
-    public ResponseEntity<OffsetDateTime> claimGift(UUID giftId, UUID clientId) {
+    public ResponseEntity<OffsetDateTime> claimGift(Long giftId, Long clientId) {
         return GiftApi.super.claimGift(giftId, clientId);
     }
 
     @Override
-    public ResponseEntity<Void> createGift(UUID businessId, CreateGiftDTO createGiftDTO) {
-        return GiftApi.super.createGift(businessId, createGiftDTO);
+    public ResponseEntity<Void> createGift(Long businessId, CreateGiftDTO createGiftDTO) {
+        giftService.CreateNewGift(createGiftDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    public ResponseEntity<List<GetClientSchedule200ResponseInner>> getBusinessSchedule(UUID businessId) {
+    public ResponseEntity<List<GetClientSchedule200ResponseInner>> getBusinessSchedule(Long businessId) {
         return GiftApi.super.getBusinessSchedule(businessId);
     }
 
     @Override
-    public ResponseEntity<List<GetClientSchedule200ResponseInner>> _getClientSchedule(UUID clientId) {
+    public ResponseEntity<List<GetClientSchedule200ResponseInner>> _getClientSchedule(Long clientId) {
         return GiftApi.super._getClientSchedule(clientId);
     }
 
     @Override
-    public ResponseEntity<List<GetClientSchedule200ResponseInner>> getClientSchedule(UUID clientId) {
+    public ResponseEntity<List<GetClientSchedule200ResponseInner>> getClientSchedule(Long clientId) {
         return GiftApi.super.getClientSchedule(clientId);
     }
 
@@ -62,7 +84,7 @@ public class GiftController implements GiftApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateGiftById(UUID businessId, UUID giftId, UpdateGiftDTO updateGiftDTO) {
+    public ResponseEntity<Void> updateGiftById(Long businessId, Long giftId, UpdateGiftDTO updateGiftDTO) {
         return GiftApi.super.updateGiftById(businessId, giftId, updateGiftDTO);
     }
 }

@@ -24,7 +24,7 @@ tags:
 
 paths:
 
-# AUTHORIZATION
+  # AUTHORIZATION
   /auth/signup/client:
     post:
       tags:
@@ -51,13 +51,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: clientId
-            applicatation/xml:
+            application/xml:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: clientId
           description: Client registered
 
@@ -86,16 +86,16 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: vendorId
-            applicatation/xml:
+            application/xml:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: vendorId
           description: Vendor registered
-          
+
   /auth/signup/admin:
     post:
       tags:
@@ -121,13 +121,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: adminId
-            applicatation/xml:
+            application/xml:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: adminId
           description: User registered
 
@@ -164,7 +164,7 @@ paths:
                 format: jwt
           description: Login successful
 
-# CLIENT
+  # CLIENT
   /clients/{clientId}/purchases:
     get:
       tags:
@@ -178,8 +178,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: dateFrom
           in: query
           schema:
@@ -223,8 +223,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid 'There should be a header for jwt, not used tho'
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -235,7 +235,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetClientDTO'
           description: Successful response
-  
+
   /gifts/{giftId}/claim:
     post:
       tags:
@@ -250,14 +250,14 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: clientId
           in: header
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -270,7 +270,7 @@ paths:
                 type: string
                 format: date-time
           description: Gift claimed at given date.
-          
+
   /services/{clientId}/schedule:
     get:
       tags:
@@ -286,8 +286,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -305,7 +305,7 @@ paths:
         '404':
           description: Client not found
 
-# VENDORS
+  # VENDORS
   /vendors/{vendorId}/account:
     get:
       tags:
@@ -318,8 +318,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -336,7 +336,7 @@ paths:
           description: Forbidden
         '404':
           description: Vendor not found
-          
+
   /vendors/business/{businessId}:
     get:
       tags:
@@ -349,8 +349,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -410,13 +410,13 @@ paths:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetGiftDTO'          
+                    -  $ref: '#/components/schemas/GetGiftDTO'
             application/xml:
               schema:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetGiftDTO'      
+                    -  $ref: '#/components/schemas/GetGiftDTO'
             text/plain:
               schema:
                 type: string
@@ -438,8 +438,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
@@ -448,13 +448,13 @@ paths:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetServiceDTO'          
+                    -  $ref: '#/components/schemas/GetServiceDTO'
             application/xml:
               schema:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetServiceDTO'      
+                    -  $ref: '#/components/schemas/GetServiceDTO'
             text/plain:
               schema:
                 type: string
@@ -463,9 +463,9 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-          
-  
-          
+
+
+
   /services/{businessId}/service/{serviceId}:
     put:
       tags:
@@ -480,14 +480,14 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: serviceId
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: The review body.
         required: true
@@ -508,7 +508,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-          
+
   /services/{businessId}/gift:
     post:
       tags:
@@ -523,8 +523,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
@@ -544,8 +544,8 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-          
-          
+
+
   /services/{businessId}/gift/{giftId}:
     put:
       tags:
@@ -560,14 +560,14 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: giftId
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: The gift.
         required: true
@@ -589,7 +589,7 @@ paths:
         '403':
           description: Forbidden
 
-# REVIEWS
+  # REVIEWS
   /reviews/{giftId}:
     post:
       tags:
@@ -602,8 +602,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: The review body.
         required: true
@@ -620,7 +620,7 @@ paths:
       responses:
         '201':
           description: Review created
-    
+
     get:
       tags:
         - Review
@@ -632,8 +632,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: page
           in: query
           schema:
@@ -653,19 +653,19 @@ paths:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetReviewDTO'          
+                    -  $ref: '#/components/schemas/GetReviewDTO'
             application/xml:
               schema:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetReviewDTO'      
+                    -  $ref: '#/components/schemas/GetReviewDTO'
             text/plain:
               schema:
                 type: string
           description: Review data
-          
-          
+
+
   /reviews/{reviewId}:
     get:
       tags:
@@ -678,8 +678,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '201':
           content:
@@ -693,7 +693,7 @@ paths:
               schema:
                 type: string
           description: Review data
-          
+
   /vendors/{vendorId}/registerBusiness:
     post:
       tags:
@@ -707,8 +707,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: New client.
         required: true
@@ -727,8 +727,8 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
                 description: businessId
           description: Business registered
         '401':
@@ -750,8 +750,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: page
           in: query
           schema:
@@ -770,13 +770,13 @@ paths:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetGiftDTO'          
+                    -  $ref: '#/components/schemas/GetGiftDTO'
             application/xml:
               schema:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/GetGiftDTO'      
+                    -  $ref: '#/components/schemas/GetGiftDTO'
             text/plain:
               schema:
                 type: string
@@ -791,7 +791,7 @@ paths:
   /vendors/{vendorId}/orders:
     get:
       tags:
-      - Vendor
+        - Vendor
       summary: Processing status of current orders
       description: Interface with shipping service for order processing.
       operationId: getVendorOrders
@@ -800,8 +800,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: page
           in: query
           schema:
@@ -820,7 +820,7 @@ paths:
                 type: array
                 items:
                   allOf:
-                    -  $ref: '#/components/schemas/OrderStatusDTO'          
+                    -  $ref: '#/components/schemas/OrderStatusDTO'
             application/xml:
               schema:
                 type: array
@@ -832,8 +832,8 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-          
-  
+
+
   /vendors/{vendorId}/order/{orderId}:
     get:
       tags:
@@ -846,20 +846,20 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: vendorId
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderStatusDTO'          
+                $ref: '#/components/schemas/OrderStatusDTO'
             application/xml:
               schema:
                 $ref: '#/components/schemas/OrderStatusDTO'
@@ -871,7 +871,7 @@ paths:
         '404':
           description: Order not found
 
-# ADMINISTRATORS
+  # ADMINISTRATORS
   /admin/clients:
     post:
       tags:
@@ -898,14 +898,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
           description: Client created
         '401':
           description: Unauthorized
         '403':
           description: Forbidden
-          
+
   /admin/clients/getAll:
     get:
       tags:
@@ -961,8 +960,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           description: User details returned
@@ -990,8 +989,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
@@ -1036,8 +1035,8 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
           description: Vendor created
         '400':
           description: Invalid input
@@ -1102,8 +1101,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           description: User details returned
@@ -1127,8 +1126,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
@@ -1146,7 +1145,7 @@ paths:
           description: Forbidden
         '404':
           description: Vendor not found
-          
+
   /admin/administrators:
     post:
       tags:
@@ -1168,14 +1167,14 @@ paths:
           text/plain:
             schema:
               type: string
-      
+
       responses:
         '201':
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
           description: Administrator created
         '400':
           description: Invalid input
@@ -1183,7 +1182,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-          
+
   /admin/administrators/getAll:
     get:
       tags:
@@ -1238,8 +1237,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           description: User details returned
@@ -1266,8 +1265,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
@@ -1298,8 +1297,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: role
           in: query
           required: true
@@ -1307,7 +1306,7 @@ paths:
             type: string
             enum: ["vendor", "client", "admin"]
             example: "client"
-      
+
       responses:
         '204':
           description: User deleted or archived
@@ -1317,7 +1316,7 @@ paths:
           description: Forbidden
         '404':
           description: User not found
-          
+
   /admin/users/{userId}/suspend:
     post:
       tags:
@@ -1330,8 +1329,15 @@ paths:
           in: path
           required: true
           schema:
+            type: integer
+            format: int64
+        - name: role
+          in: query
+          required: true
+          schema:
             type: string
-            format: uuid
+            enum: ["vendor", "client", "admin"]
+            example: "client"
       responses:
         '200':
           description: User suspended
@@ -1356,9 +1362,16 @@ paths:
           in: path
           required: true
           schema:
+            type: integer
+            format: int64
+        - name: role
+          in: query
+          required: true
+          schema:
             type: string
-            format: uuid
-      
+            enum: ["vendor", "client", "admin"]
+            example: "client"
+
       responses:
         '200':
           description: User reinstated
@@ -1384,8 +1397,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: Business verification status.
         required: true
@@ -1399,7 +1412,7 @@ paths:
           text/plain:
             schema:
               type: string
-      
+
       responses:
         '200':
           description: Business verification status set
@@ -1409,8 +1422,8 @@ paths:
           description: Forbidden
         '404':
           description: Business not found
-  
-# PURCHASE
+
+  # PURCHASE
   /cart/{clientId}:
     get:
       tags:
@@ -1423,8 +1436,8 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '200':
           description: Successful response
@@ -1439,24 +1452,21 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       requestBody:
         description: Item Id
         required: true
         content:
           application/json:
             schema:
-              type: string
-              format: uuid
+              type: integer
           application/xml:
             schema:
-              type: string
-              format: uuid
+              type: integer
           text/plain:
             schema:
-              type: string
-              format: uuid
+              type: integer
       responses:
         '201':
           description: Item added
@@ -1474,14 +1484,14 @@ paths:
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
         - name: giftId
           in: path
           required: true
           schema:
-            type: string
-            format: uuid
+            type: integer
+            format: int64
       responses:
         '204':
           description: Item removed
@@ -1499,15 +1509,15 @@ components:
           format: email
         password:
           type: string
-          
+
     UpdateServiceDTO:
       required:
         - businessId
       type: object
       properties:
         businessId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         status:
           type: string
           enum: ["pending_approval", "approved", "cancelled", "pending_rescheduling"]
@@ -1516,21 +1526,21 @@ components:
           type: string
           description: Name of business that is selling the service.
         clientId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         startDate:
           type: string
           format: date-time
-          
+
     GetServiceDTO:
       type: object
       properties:
         businessId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         serviceId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         status:
           type: string
           enum: ["pending_approval", "approved", "cancelled", "pending_rescheduling"]
@@ -1539,15 +1549,16 @@ components:
           type: string
           description: Name of business that is selling the service.
         clientId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         startDate:
           type: string
           format: date-time
-    
+
     CreateGiftDTO:
       required:
         - businessId
+        - issuingVendorId
         - name
         - isService
         - giftDescription
@@ -1557,8 +1568,11 @@ components:
         isService:
           type: boolean
         businessId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
+        issuingVendorId:
+          type: integer
+          format: int64
         name:
           type: string
         giftDescription:
@@ -1566,34 +1580,39 @@ components:
         priceInPln:
           type: number
           format: money
-    
+        tags:
+          type: array
+          items:
+            type: string
+
+
     UpdateGiftDTO:
       type: object
       properties:
         isService:
           type: boolean
-        businessId:
-          type: string
-          format: uuid
         name:
           type: string
         giftDescription:
           type: string
-  
+        priceInPln:
+          type: number
+          format: money
+
     GetGiftDTO:
       type: object
       properties:
-        giftId: 
-          type: string
-          format: uuid
+        giftId:
+          type: integer
+          format: int64
         name:
           type: string
         businessId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         issuingVendorId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         isService:
           type: boolean
         giftDescription:
@@ -1606,7 +1625,9 @@ components:
           type: array
           items:
             type: string
-        
+        isArchived:
+          type: boolean
+
     CreateReviewDTO:
       required:
         - rating
@@ -1630,13 +1651,13 @@ components:
             type: string
             xml:
               name: photoUrl
-      
+
     GetReviewDTO:
       type: object
       properties:
         reviewId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         rating:
           type: number
           format: float
@@ -1655,7 +1676,7 @@ components:
             type: string
             xml:
               name: photoUrl
-    
+
     CreateBusinessDTO:
       required:
         - name
@@ -1675,13 +1696,13 @@ components:
         websiteUrl:
           type: string
           format: url
-    
+
     GetBusinessDTO:
       type: object
       properties:
         applicantId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
           description: The vendor id that applied for the business creation.
         name:
           type: string
@@ -1699,8 +1720,8 @@ components:
         verificationTimestamp:
           type: string
           format: date-time
-              
-            
+
+
     CreateClientDTO:
       required:
         - email
@@ -1727,7 +1748,7 @@ components:
         birthday:
           type: string
           format: date
-          
+
     UpdateClientDTO:
       type: object
       properties:
@@ -1748,7 +1769,7 @@ components:
         birthday:
           type: string
           format: date
-          
+
     GetClientDTO:
       type: object
       properties:
@@ -1769,7 +1790,7 @@ components:
         birthday:
           type: string
           format: date
-        
+
     CreateVendorDTO:
       required:
         - email
@@ -1793,7 +1814,7 @@ components:
         profession:
           type: string
           example: "Local Manager"
-        
+
     UpdateVendorDTO:
       type: object
       properties:
@@ -1811,13 +1832,13 @@ components:
         profession:
           type: string
           example: "Local Manager"
-          
+
     GetVendorDTO:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         email:
           type: string
           format: email
@@ -1832,7 +1853,7 @@ components:
         profession:
           type: string
           example: "Local Manager"
-          
+
     CreateAdminDTO:
       required:
         - email
@@ -1840,8 +1861,8 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         email:
           type: string
           format: email
@@ -1849,7 +1870,7 @@ components:
         password:
           type: string
           format: password
-          
+
     UpdateAdminDTO:
       required:
         - email
@@ -1857,8 +1878,8 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         email:
           type: string
           format: email
@@ -1866,13 +1887,13 @@ components:
         password:
           type: string
           format: password
-    
+
     GetAdminDTO:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         email:
           type: string
           format: email
@@ -1880,7 +1901,7 @@ components:
         password:
           type: string
           format: password
-          
+
     BusinessVerificationDTO:
       required:
         - businessId
@@ -1888,15 +1909,15 @@ components:
       type: object
       properties:
         businessId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
         status:
           type: string
           enum: ["pending", "approved", "rejected"]
           example: "approved"
         reviewerId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
           description: Administrator verifying the business id.
         notes:
           type: string
@@ -1909,11 +1930,12 @@ components:
       type: object
       properties:
         orderId:
-          type: string
+          type: integer
+          format: int64
           description: Order id given by the shipping company.
         providerId:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
           description: Provider id registered in the DFS system.
         giftIds:
           type: array
@@ -1921,8 +1943,8 @@ components:
             type: object
             properties:
               giftId:
-                type: string
-                format: uuid
+                type: integer
+                format: int64
               quantity:
                 type: integer
                 example: 2

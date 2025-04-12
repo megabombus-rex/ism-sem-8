@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "services")
@@ -14,59 +14,59 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "gift_id")
-    public UUID giftId;
+    public Long giftId;
 
     @Column(name = "business_id")
-    public UUID businessId;
+    public Long businessId;
 
     @Column(name = "start_date")
     public DateTime startDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gift_id", referencedColumnName = "id")
+    @JoinColumn(name = "gift_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Gift gift;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "service")
     private Set<ServiceSchedule> serviceSchedules = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_id", referencedColumnName = "id")
+    @JoinColumn(name = "business_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Business business;
 
     // constructors
     public Service() { }
 
-    public Service(UUID giftId, UUID businessId, DateTime startDate) {
+    public Service(Long giftId, Long businessId, DateTime startDate) {
         this.giftId = giftId;
         this.businessId = businessId;
         this.startDate = startDate;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getGiftId() {
+    public Long getGiftId() {
         return giftId;
     }
 
-    public void setGiftId(UUID giftId) {
+    public void setGiftId(Long giftId) {
         this.giftId = giftId;
     }
 
-    public UUID getBusinessId() {
+    public Long getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(UUID businessId) {
+    public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
 

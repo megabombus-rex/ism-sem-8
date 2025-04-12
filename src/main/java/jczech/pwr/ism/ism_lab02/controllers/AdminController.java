@@ -7,59 +7,54 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RestController
 public class AdminController implements AdminApi {
+    @Override
+    public ResponseEntity<Void> reinstateUserById(Long userId, String role) {
+        return AdminApi.super.reinstateUserById(userId, role);
+    }
 
     @Override
-    public ResponseEntity<UUID> createAdmin(CreateAdminDTO createAdminDTO) {
+    public ResponseEntity<Long> createAdmin(CreateAdminDTO createAdminDTO) {
         return AdminApi.super.createAdmin(createAdminDTO);
     }
 
     @Override
-    public ResponseEntity<Void> deleteUserById(UUID userId, String role) {
+    public ResponseEntity<Void> deleteUserById(Long userId, String role) {
         return AdminApi.super.deleteUserById(userId, role);
     }
 
-
     @Override
-    public ResponseEntity<GetAdminDTO> getAdminById(UUID adminId) {
+    public ResponseEntity<GetAdminDTO> getAdminById(Long adminId) {
         return AdminApi.super.getAdminById(adminId);
     }
 
     @Override
-    public ResponseEntity<GetVendorDTO> getVendorById(UUID vendorId) {
+    public ResponseEntity<GetVendorDTO> getVendorById(Long vendorId) {
         return AdminApi.super.getVendorById(vendorId);
     }
 
-    @Override
-    public ResponseEntity<Void> reinstateUserById(UUID userId) {
-        return AdminApi.super.reinstateUserById(userId);
-    }
 
     @Override
-    public ResponseEntity<UUID> signUpA(CreateAdminDTO createAdminDTO) {
+    public ResponseEntity<Long> signUpA(CreateAdminDTO createAdminDTO) {
         return AdminApi.super.signUpA(createAdminDTO);
     }
 
-    @Override
-    public ResponseEntity<Void> suspendUserById(UUID userId) {
-        return AdminApi.super.suspendUserById(userId);
-    }
 
     @Override
-    public ResponseEntity<Void> updateAdminById(UUID adminId, UpdateAdminDTO updateAdminDTO) {
+    public ResponseEntity<Void> updateAdminById(Long adminId, UpdateAdminDTO updateAdminDTO) {
         return AdminApi.super.updateAdminById(adminId, updateAdminDTO);
     }
 
     @Override
-    public ResponseEntity<Void> updateVendorById(UUID vendorId, UpdateVendorDTO updateVendorDTO) {
+    public ResponseEntity<Void> updateVendorById(Long vendorId, UpdateVendorDTO updateVendorDTO) {
         return AdminApi.super.updateVendorById(vendorId, updateVendorDTO);
     }
 
     @Override
-    public ResponseEntity<Void> verifyBusinessById(UUID businessId, BusinessVerificationDTO businessVerificationDTO) {
+    public ResponseEntity<Void> verifyBusinessById(Long businessId, BusinessVerificationDTO businessVerificationDTO) {
         return AdminApi.super.verifyBusinessById(businessId, businessVerificationDTO);
     }
 }

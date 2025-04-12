@@ -2,7 +2,7 @@ package jczech.pwr.ism.ism_lab02.entities.businesses.gifts;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "gift_orders")
@@ -10,53 +10,53 @@ public class GiftOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public UUID id;
+    public Long id;
 
     @Column(name = "order_id")
-    public UUID orderId;
+    public Long orderId;
 
     @Column(name = "gift_id")
-    public UUID giftId;
+    public Long giftId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gift_id", referencedColumnName = "id")
+    @JoinColumn(name = "gift_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Gift gift;
 
     // constructors
     public GiftOrder() { }
 
-    public GiftOrder(UUID orderId, UUID giftId)
+    public GiftOrder(Long orderId, Long giftId)
     {
         this.orderId = orderId;
         this.giftId = giftId;
     }
 
     // getters & setters
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public UUID getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(UUID orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public UUID getGiftId() {
+    public Long getGiftId() {
         return giftId;
     }
 
-    public void setGiftId(UUID giftId) {
+    public void setGiftId(Long giftId) {
         this.giftId = giftId;
     }
 
