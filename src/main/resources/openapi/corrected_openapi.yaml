@@ -21,8 +21,28 @@ tags:
     description: Operation regarding the business setup on the platform.
   - name: Review
     description: Operation regarding the reviews of gifts, services and businesses.
+  - name: Aspect
 
 paths:
+
+  # ASPECT
+  /aspect:
+    get:
+      tags:
+        - Aspect
+      summary: Get the count of calls of every method
+      description: Get the count of calls of every method
+      operationId: getCountOfCalls
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodCountCallsDTO'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MethodCountCallsDTO'
+          description: Successful response
 
   # AUTHORIZATION
   /auth/signup/client:
@@ -159,7 +179,7 @@ paths:
                 type: integer
                 format: int64
                 description: userId
-            application/xml:
+            applicatation/xml:
               schema:
                 type: integer
                 format: int64
@@ -1534,6 +1554,13 @@ paths:
 
 components:
   schemas:
+    MethodCountCallsDTO:
+      properties:
+        data:
+          type: array
+          items:
+            type: string
+
     LoginDataDTO:
       required:
         - emailAddress
