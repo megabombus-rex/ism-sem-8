@@ -29,7 +29,7 @@ public class GiftController implements GiftApi {
     public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count){
         var list = giftService.getGiftsByTags(tags, priceRangeMin.floatValue(), priceRangeMax.floatValue(), page, count);
 
-        if (list.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (list == null || list.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         var translatedList = new ArrayList<SearchGiftsByTags200ResponseInner>();
 

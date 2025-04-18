@@ -55,11 +55,13 @@ public class GiftServiceOne implements GiftService {
                 .filter(x -> tagIds.contains(x.tagId))
                 .map(x -> x.giftId)
                 .collect(Collectors.toSet());
-
+        System.out.println(giftIds);
         var gifts = giftRepository.findAllById(giftIds)
                 .stream()
-                .filter(g -> g.priceInPln >= minRange && g.priceInPln <= maxRange)
+                .filter(g -> g.getPriceInPln() >= minRange && g.getPriceInPln() <= maxRange)
                 .collect(Collectors.toList());
+
+        System.out.println(gifts == null ? "null" : gifts.stream().count());
 
         if (gifts.isEmpty()) {
             return null;

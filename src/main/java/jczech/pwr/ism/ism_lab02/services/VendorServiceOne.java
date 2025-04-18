@@ -9,12 +9,17 @@ import jczech.pwr.ism.ism_lab02.repositories.RoleRepository;
 import jczech.pwr.ism.ism_lab02.repositories.VendorRepository;
 import jczech.pwr.ism.model.CreateBusinessDTO;
 import jczech.pwr.ism.model.CreateVendorDTO;
+import jczech.pwr.ism.model.GetBusinessDTO;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.util.List;
 
 
 @Service
@@ -78,5 +83,34 @@ public class VendorServiceOne implements VendorService {
         businessRepository.flush();
 
         return business.getId();
+    }
+
+    @Override
+    public GetBusinessDTO getBusinessByVendorId(Long vendorId) {
+        if (!vendorRepository.findById(vendorId).isPresent()){
+            return null;
+        }
+
+        var businesses = businessRepository.findByInitialVendorId(vendorId);
+
+        if (businesses.stream().allMatch(x -> x.isArchived))
+        {
+           System.out.println("This vendor has an active business right now.");
+           return null;
+        }
+
+        var currentBusiness = businesses.stream().filter(x -> !x.isArchived).findFirst();
+
+        var dto = new GetBusinessDTO();
+        dto.setBusinessId(currentBusiness.get().getId());
+        dto.setApplicantId(currentBusiness.get().getInitialVendorId());
+        dto.setName(currentBusiness.get().getName());
+        dto.setEmail(currentBusiness.get().getEmailAddress());
+        dto.setPhoneNumber(currentBusiness.get().getPhoneNumber());
+        dto.setWebsiteUrl(currentBusiness.get().getWebsiteUrl());
+        dto.setIsVerified(currentBusiness.get().isVerified());
+        dto.verificationTimestamp(OffsetDateTime.ofInstant(Instant.ofEpochMilli(currentBusiness.get().getVerificationTimestamp().getTime()), ZoneId.of("UTC")));
+
+        return dto;
     }
 }

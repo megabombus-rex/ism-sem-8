@@ -11,6 +11,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -33,6 +34,17 @@ public class VendorController implements VendorApi {
     @Override
     public ResponseEntity<GetBusinessDTO> getBusinessById(Long businessId) {
         return VendorApi.super.getBusinessById(businessId);
+    }
+
+    @Override
+    public ResponseEntity<GetBusinessDTO> getBusinessesByVendorId(Long vendorId) {
+        var data = vendorService.getBusinessByVendorId(vendorId);
+
+        if (data == null ) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
     @Override
