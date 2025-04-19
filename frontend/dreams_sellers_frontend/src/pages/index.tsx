@@ -4,7 +4,7 @@ import { logEvent } from '../lib/logger';
 import styles from '../styles/loginstyle'
 
 export default function Home() {
-  const [email, setEmail] = useState('');
+  const [emailAddress, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userId, setUserId] = useState<number | null>(null);
   const router = useRouter();
@@ -13,21 +13,20 @@ export default function Home() {
     logEvent('Attempting login');
 
     try {
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ emailAddress, password, "role":"vendor" }),
       });
 
       if (!response.ok) throw new Error('Login failed');
 
-      const result = await response.json(); // assuming the API returns: { userId: 123 }
-      setUserId(result.userId);
-      logEvent(`Login successful. User ID: ${result.userId}`);
+      const result = await response.text(); // assuming the API returns: { userId: 123 }
+      setUserId(Number(result));
+      logEvent(`Login successful. User ID: ${userId}`);
 
-      router.push('/dashboard');
     } catch (error) {
       logEvent('Login error: ' + (error as Error).message);
       alert('Login failed. Check console for details.');
@@ -40,7 +39,7 @@ export default function Home() {
         <input
           type="text"
           placeholder="Email"
-          value={email}
+          value={emailAddress}
           onChange={e => setEmail(e.target.value)}
           style={styles.input}
         />

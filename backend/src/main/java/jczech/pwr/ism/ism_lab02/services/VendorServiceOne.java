@@ -38,15 +38,15 @@ public class VendorServiceOne implements VendorService {
     @Override
     public Long createNewVendor(CreateVendorDTO createVendorDTO)
     {
-        var role = roleRepository.findAll().stream().filter(x -> x.name.equals("Vendor")).findFirst();
+        var role = roleRepository.findAll().stream().filter(x -> x.name.equals("vendor")).findFirst();
 
         if (role.isEmpty()){
             var newRole = new Role();
-            newRole.name = "Vendor";
+            newRole.name = "vendor";
 
             roleRepository.save(newRole);
             roleRepository.flush();
-            role = roleRepository.findAll().stream().filter(x -> x.name.equals("Vendor")).findFirst();
+            role = roleRepository.findAll().stream().filter(x -> x.name.equals("vendor")).findFirst();
         }
 
         var vendor = new Vendor(createVendorDTO.getProfession(), createVendorDTO.getFirstName(), createVendorDTO.getLastName(), createVendorDTO.getEmail(), createVendorDTO.getPassword(), role.get().getId());
