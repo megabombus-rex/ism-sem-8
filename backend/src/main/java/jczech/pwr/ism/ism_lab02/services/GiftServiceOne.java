@@ -48,17 +48,34 @@ public class GiftServiceOne implements GiftService {
 
     @Override
     public List<GetGiftDTO> getGiftsByTags(List<String> tags, double minRange, double maxRange, int page, int pageSize) {
-        var tagIds = tagRepository.getTagIdsByNames(tags);
+        if (maxRange <= 0)
+        {
+            maxRange = Double.MAX_VALUE;
+        }
+
+        var finalMax = maxRange;
+
+        List<Long> tagIds;
+
+        if (tags.isEmpty()){
+            tagIds = tagRepository.findAll().stream().map(x -> x.getId()).collect(Collectors.toList());
+        }
+        else
+        {
+            tagIds = tagRepository.getTagIdsByNames(tags);
+        }
+
+        var finalTagIds = tagIds;
 
         var giftIds = giftTagRepository.findAll()
                 .stream()
-                .filter(x -> tagIds.contains(x.tagId))
+                .filter(x -> finalTagIds.contains(x.tagId))
                 .map(x -> x.giftId)
                 .collect(Collectors.toSet());
         System.out.println(giftIds);
         var gifts = giftRepository.findAllById(giftIds)
                 .stream()
-                .filter(g -> g.getPriceInPln() >= minRange && g.getPriceInPln() <= maxRange)
+                .filter(g -> g.getPriceInPln() >= minRange && g.getPriceInPln() <= finalMax)
                 .collect(Collectors.toList());
 
         System.out.println(gifts == null ? "null" : gifts.stream().count());
@@ -66,6 +83,8 @@ public class GiftServiceOne implements GiftService {
         if (gifts.isEmpty()) {
             return null;
         }
+
+
 
         return gifts.stream().map(x -> {
             var dto = new GetGiftDTO();
@@ -77,7 +96,19 @@ public class GiftServiceOne implements GiftService {
             dto.setBusinessId(x.getBusinessId());
             dto.setIssuingVendorId(x.getIssuingVendorId());
             dto.setIsArchived(x.isArchived());
-            dto.setTags(tags);
+            dto.setTags(tagRepository
+                    .findAll()
+                    .stream()
+                    .filter(y ->
+                            x
+                                    .getGiftTags()
+                                    .stream()
+                                    .filter(z -> z.getTagId() == y.getId())
+                                    .toList().isEmpty())
+                    .map(y -> y.getName())
+                    .collect(Collectors.toList()
+                    )
+            );
             return dto;}).toList();
     }
 

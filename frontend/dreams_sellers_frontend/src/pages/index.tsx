@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { logEvent } from '../lib/logger';
 import styles from '../styles/loginstyle'
@@ -24,8 +24,13 @@ export default function Home() {
       if (!response.ok) throw new Error('Login failed');
 
       const result = await response.text(); // assuming the API returns: { userId: 123 }
-      setUserId(Number(result));
-      logEvent(`Login successful. User ID: ${userId}`);
+      const resultParsed = Number(result);
+      setUserId(resultParsed);
+      logEvent(`Login successful. User ID: ${resultParsed}`);
+      logEvent(`Login successful. Response text: ${result}`);
+      
+      localStorage.setItem('userId', resultParsed.toString());
+      router.push('/dashboard');
 
     } catch (error) {
       logEvent('Login error: ' + (error as Error).message);
@@ -36,6 +41,7 @@ export default function Home() {
   return (
     <main style={styles.container}>
       <div style={styles.form}>
+        <text>Login as a vendor!</text>
         <input
           type="text"
           placeholder="Email"

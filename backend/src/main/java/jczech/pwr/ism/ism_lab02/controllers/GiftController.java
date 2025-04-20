@@ -27,6 +27,16 @@ public class GiftController implements GiftApi {
 
     @Override
     public ResponseEntity<List<SearchGiftsByTags200ResponseInner>> searchGiftsByTags(List<String> tags, BigDecimal priceRangeMin, BigDecimal priceRangeMax, Integer page, Integer count){
+        if (tags == null){
+            tags = new ArrayList<>();
+        }
+        if(priceRangeMin == null){
+            priceRangeMin = BigDecimal.ZERO;
+        }
+        if(priceRangeMax == null){
+            priceRangeMax = BigDecimal.ZERO;
+        }
+
         var list = giftService.getGiftsByTags(tags, priceRangeMin.floatValue(), priceRangeMax.floatValue(), page, count);
 
         if (list == null || list.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);

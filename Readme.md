@@ -10,22 +10,49 @@ spring.jpa.hibernate.ddl-auto=create
 
 Then you run the application in IntelliJ IDEA.
 
-## Available features
+## Available API features
 
 Endpoints implemented:
 
-POST:
-creating a vendor
+### POST:
+creating a vendor:
 /auth/signup/vendor
 /admin/vendors
 
-registering a business 
+sign in:
+/auth/login
+
+registering a business:
 /vendors/{vendorId}/registerBusiness
 
-post a new gift
+post a new gift:
 /services/{businessId}/gift
 
 
-GET:
-a filtered list of gifts
+### GET:
+a filtered list of gifts:
 /gifts
+
+aspect oriented programming (AOP):
+/aspect
+
+## Frontend
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
