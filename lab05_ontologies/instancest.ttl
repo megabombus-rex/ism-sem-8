@@ -1,0 +1,219 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dfs: <http://dfsample.org/dreams#> .
+
+# Businesses
+dfs:VendorDreamWorks rdf:type dfs:Vendor ;
+    rdfs:label "DreamWorks Vendor" ;
+	dfs:ownedBy dfs:bob ;
+	dfs:hasVendor dfs:bob, dfs:marian .
+
+dfs:BusinessA rdf:type dfs:Business ;
+    rdfs:label "DreamTech Inc." ;
+	dfs:ownedBy dfs:adam ;
+	dfs:hasVendor dfs:adam .
+	
+dfs:BusinessB rdf:type dfs:Business ;
+	rdfs:label "Nice Dreams in BusinessB" ;
+	dfs:ownedBy dfs:adam ;
+	dfs:hasVendor dfs:adam .
+
+dfs:RomanBusiness rdf:type dfs:Business ;
+	rdfs:label "Good Romans in work" ;
+	dfs:ownedBy dfs:roman2 ;
+	dfs:hasVendor dfs:roman, dfs:roman2 .
+
+# Users
+# Clients
+dfs:alice rdf:type dfs:Client ;
+    rdfs:label "Alice" .
+	
+dfs:damian rdf:type dfs:Client ;
+	rdfs:label "Damian" .
+	
+dfs:matthew rdf:type dfs:Client ;
+	rdfs:label "Matthew" .
+	
+dfs:maria rdf:type dfs:Client ;
+	rdfs:label "Maria" .
+	
+dfs:lolly rdf:type dfs:Client ;
+	rdfs:label "Lolly" .
+	
+# Vendors
+dfs:bob rdf:type dfs:Vendor ;
+    rdfs:label "Bob" .
+
+dfs:marian rdf:type dfs:Vendor ;
+	rdfs:label "Marian" .
+		
+dfs:adam rdf:type dfs:Vendor ;
+	rdfs:label "Adam" .
+	
+dfs:roman rdf:type dfs:Vendor ;
+	rdfs:label "Roman" .
+
+dfs:roman2 rdf:type dfs:Vendor ;
+	rdfs:label "Roman 2" .
+
+# Administrators
+dfs:carol rdf:type dfs:Administrator ;
+    rdfs:label "Carol" .
+
+# Dreams
+dfs:lucidIsland rdf:type dfs:ServiceDream ;
+    rdfs:label "Lucid Island dfsperience" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+    dfs:usedBy dfs:alice .
+
+dfs:corporateEscape rdf:type dfs:ServiceDream ;
+    rdfs:label "Corporate Escape Program" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:usedBy dfs:alice, dfs:damian .
+
+dfs:offRoad rdf:type dfs:ServiceDream ;
+    rdfs:label "4x4 OFF-road, 15 mins" ;
+	dfs:createdBy dfs:BusinessA ;
+    dfs:duration 20 ;
+    dfs:usedBy dfs:alice, dfs:damian .
+
+dfs:flyInAPlane rdf:type dfs:ServiceDream ;
+    rdfs:label "Fly in a plane with a friend" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+	dfs:duration 30 ;
+    dfs:usedBy dfs:maria, dfs:damian, dfs:lolly .
+
+dfs:empikVoucher200 rdf:type dfs:GiftDream ;
+    rdfs:label "Empik gift card voucher for 200 PLN" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:usedBy dfs:lolly, dfs:alice .
+	
+dfs:empikVoucher50 rdf:type dfs:GiftDream ;
+    rdfs:label "Empik gift card voucher for 50 PLN" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:usedBy dfs:matthew .
+
+dfs:bigBagOfGummyBears rdf:type dfs:GiftDream ;
+    rdfs:label "5kg Haribo Gummy Bears" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:usedBy dfs:matthew, dfs:damian .
+
+dfs:hotSauceSet3 rdf:type dfs:GiftDream ;
+    rdfs:label "Set of 3 local hot sauces" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:usedBy dfs:lolly .
+	
+dfs:hotSauceSet5 rdf:type dfs:GiftDream ;
+    rdfs:label "Set of 5 local hot sauces" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:usedBy dfs:matthew, dfs:damian .
+	
+dfs:frenchWineTasting rdf:type dfs:ServiceDream ;
+    rdfs:label "Tasting of french wine" ;
+    dfs:createdBy dfs:BusinessB ;
+	dfs:duration 240 ;
+    dfs:usedBy dfs:matthew, dfs:damian .
+	
+dfs:italianWineTasting rdf:type dfs:ServiceDream ;
+    rdfs:label "Tasting of italian wine" ;
+    dfs:createdBy dfs:BusinessB ;
+	dfs:duration 30 ;
+    dfs:usedBy dfs:matthew, dfs:damian .
+	
+dfs:wheelBarrowTrip rdf:type dfs:ServiceDream ;
+    rdfs:label "Roman transporting with wheelbarrow." ;
+    dfs:createdBy dfs:RomanBusiness ;
+	dfs:duration 30 ;
+    dfs:usedBy dfs:maria .
+	
+dfs:knowYourShooting rdf:type dfs:ServiceDream ;
+    rdfs:label "Shooting range introduction." ;
+    dfs:createdBy dfs:RomanBusiness ;
+	dfs:duration 100 ;
+    dfs:usedBy dfs:maria .
+	
+dfs:lucidMeditation rdf:type dfs:ServiceDream ;
+    rdfs:label "Lucid Dream Meditation Session" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+    dfs:duration 60 ;
+    dfs:usedBy dfs:alice .
+
+dfs:deepSeaEscape rdf:type dfs:ServiceDream ;
+    rdfs:label "Deep Sea Escape VR Journey" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:duration 90 ;
+    dfs:usedBy dfs:matthew .
+
+dfs:mountainFlight rdf:type dfs:ServiceDream ;
+    rdfs:label "Dream Glider Over Mountains" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:duration 120 ;
+    dfs:usedBy dfs:damian .
+
+dfs:urbanChill rdf:type dfs:ServiceDream ;
+    rdfs:label "City Rooftop Relaxation Experience" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:duration 75 ;
+    dfs:usedBy dfs:lolly .
+
+dfs:desertVision rdf:type dfs:ServiceDream ;
+    rdfs:label "Desert Vision Quest" ;
+    dfs:createdBy dfs:RomanBusiness ;
+    dfs:duration 180 ;
+    dfs:usedBy dfs:alice .
+
+dfs:skyDiveDream rdf:type dfs:ServiceDream ;
+    rdfs:label "Sky Dive Simulation Dream" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+    dfs:duration 95 ;
+    dfs:usedBy dfs:damian .
+
+dfs:zenMastery rdf:type dfs:ServiceDream ;
+    rdfs:label "Zen Garden Dream Mastery" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:duration 60 ;
+    dfs:usedBy dfs:maria .
+	
+dfs:hotSauceSet5 rdf:type dfs:GiftDream ;
+    rdfs:label "Set of 5 local hot sauces" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:usedBy dfs:matthew, dfs:damian .
+
+dfs:silkSleepKit rdf:type dfs:GiftDream ;
+    rdfs:label "Silk Sleep Comfort Kit" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:usedBy dfs:alice .
+
+dfs:miniDreamBox rdf:type dfs:GiftDream ;
+    rdfs:label "Mini Dream-In-A-Box Pack" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+    dfs:usedBy dfs:lolly .
+
+dfs:chiliAdventure rdf:type dfs:GiftDream ;
+    rdfs:label "Spicy Food Dream Adventure Pack" ;
+    dfs:createdBy dfs:RomanBusiness ;
+    dfs:usedBy dfs:damian .
+
+dfs:serenityStones rdf:type dfs:GiftDream ;
+    rdfs:label "Set of Dream-Focused Serenity Stones" ;
+    dfs:createdBy dfs:BusinessB ;
+    dfs:usedBy dfs:maria, dfs:alice .
+
+dfs:artisanTeaSet rdf:type dfs:GiftDream ;
+    rdfs:label "Dream-Infused Artisan Tea Set" ;
+    dfs:createdBy dfs:BusinessA ;
+    dfs:usedBy dfs:matthew .
+
+dfs:sleepJournal rdf:type dfs:GiftDream ;
+    rdfs:label "Customizable Dream Sleep Journal" ;
+    dfs:createdBy dfs:VendorDreamWorks ;
+    dfs:usedBy dfs:lolly, dfs:maria .
+	
+# Offering relation
+dfs:VendorDreamWorks dfs:offers dfs:lucidIsland, dfs:flyInAPlane, dfs:lucidMeditation, dfs:skyDiveDream, dfs:miniDreamBox, dfs:sleepJournal .
+
+dfs:BusinessA dfs:offers dfs:corporateEscape, dfs:offRoad, dfs:empikVoucher200, dfs:empikVoucher50, dfs:deepSeaEscape, dfs:urbanChill, dfs:silkSleepKit, dfs:artisanTeaSet .
+
+dfs:BusinessB dfs:offers dfs:bigBagOfGummyBears, dfs:hotSauceSet3, dfs:hotSauceSet5, dfs:frenchWineTasting, dfs:italianWineTasting, dfs:mountainFlight, dfs:zenMastery, dfs:serenityStones .
+
+dfs:RomanBusiness dfs:offers dfs:wheelBarrowTrip, dfs:desertVision, dfs:chiliAdventure .

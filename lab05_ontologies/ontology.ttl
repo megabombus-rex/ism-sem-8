@@ -1,0 +1,46 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dfs:   <http://dfsample.org/dreams#> .
+
+# Classes
+dfs:Dream a rdfs:Class .
+dfs:GiftDream a rdfs:Class ; rdfs:subClassOf dfs:Dream .
+dfs:ServiceDream a rdfs:Class ; rdfs:subClassOf dfs:Dream .
+
+dfs:Business a rdfs:Class .
+
+dfs:User a rdfs:Class .
+dfs:Client a rdfs:Class ; rdfs:subClassOf dfs:User .
+dfs:Vendor a rdfs:Class ; rdfs:subClassOf dfs:User .
+dfs:Administrator a rdfs:Class ; rdfs:subClassOf dfs:User .
+
+# Dreams Properties
+dfs:createdBy a rdf:Property ;
+    rdfs:domain dfs:Dream ;
+    rdfs:range dfs:Business .
+
+dfs:usedBy a rdf:Property ;
+    rdfs:domain dfs:Dream ;
+    rdfs:range dfs:Client .
+
+dfs:duration a rdf:Property ;
+	rdfs:domain dfs:ServiceDream ;
+	rdfs:range xsd:integer ;
+    rdfs:comment "Duration of service in minutes." .	
+
+# Business Properties
+dfs:hasVendor a rdf:Property ;
+    rdfs:domain dfs:Business ;
+    rdfs:range dfs:Vendor ;
+    rdfs:comment "Links a business to the vendors operating under it." .
+
+dfs:ownedBy a rdf:Property ;
+    rdfs:domain dfs:Business ;
+    rdfs:range dfs:Vendor ;
+    rdfs:comment "The creator or owner of the business." .
+
+dfs:offers a rdf:Property ;
+    rdfs:domain dfs:Vendor ;
+    rdfs:range dfs:Dream .
+	
