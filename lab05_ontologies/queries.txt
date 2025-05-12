@@ -1,0 +1,84 @@
+# find every service dream that was used by alice that lasted longer than 60 minutes
+PREFIX dfs: <http://dfsample.org/dreams#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dream ?label ?duration
+WHERE {
+  ?dream rdf:type dfs:ServiceDream ;
+         dfs:usedBy dfs:alice ;
+         rdfs:label ?label ;
+         dfs:duration ?duration .
+  FILTER (?duration > 60)
+}
+
+returns:
+dream				label								duration
+dfs:lucidMeditation "Lucid Dream Meditation Session" 	60
+dfs:desertVision 	"Desert Vision Quest" 				180
+
+# find every vendor that works for more than one business
+PREFIX dfs: <http://dfsample.org/dreams#>
+
+SELECT ?vendor (COUNT(DISTINCT ?business) AS ?businessCount)
+WHERE {
+  ?business dfs:hasVendor ?vendor .
+}
+GROUP BY ?vendor
+HAVING (COUNT(DISTINCT ?business) > 1)
+
+returns:
+vendor		businessCount
+dfs:adam 	2
+
+# find every gift dream used by Damian created by BusinessB
+PREFIX dfs: <http://dfsample.org/dreams#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dream ?label
+WHERE {
+  ?dream rdf:type dfs:GiftDream ;
+         dfs:createdBy dfs:BusinessB ;
+         dfs:usedBy dfs:damian ;
+         rdfs:label ?label .
+}
+
+returns:
+dream					label
+dfs:bigBagOfGummyBears 	"5kg Haribo Gummy Bears"
+dfs:hotSauceSet5 		"Set of 5 local hot sauces"
+
+
+# find every dream used by matthew and also damian
+PREFIX dfs: <http://dfsample.org/dreams#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dream ?label
+WHERE {
+  ?dream dfs:usedBy dfs:matthew , dfs:damian ;
+         rdfs:label ?label .
+}
+
+returns:
+dream					label
+dfs:bigBagOfGummyBears	"5kg Haribo Gummy Bears"
+dfs:hotSauceSet5		"Set of 5 local hot sauces"
+dfs:frenchWineTasting	"Tasting of french wine"
+dfs:italianWineTasting	"Tasting of italian wine"
+
+# find every business and the number of distinct clients that used the dreams created by those businesses
+PREFIX dfs: <http://dfsample.org/dreams#>
+
+SELECT ?business (COUNT(DISTINCT ?client) AS ?clientCount)
+WHERE {
+  ?dream dfs:createdBy ?business ;
+         dfs:usedBy ?client .
+  ?client rdf:type dfs:Client .
+}
+GROUP BY ?business
+
+returns:
+business				clientCount
+dfs:RomanBusiness		3
+dfs:VendorDreamWorks	4
+dfs:BusinessB			5
+dfs:BusinessA			4

@@ -1,0 +1,40 @@
+
+V	java:S125"<This block of commented-out lines of code should be removed.(²¿¨üÿÿÿÿ
+Q	java:S125"<This block of commented-out lines of code should be removed.(Ï¾ÛÜ
+W
+java:S1659&"ADeclare "pre2" and all following declarations on a separate line.(·Ş„š
+D
+java:S1481%")Remove this unused "pre1" local variable.(•›ßĞúÿÿÿÿ
+?
+java:S1481&")Remove this unused "pre2" local variable.(·Ş„š
+D
+java:S1481'")Remove this unused "pre3" local variable.(©ÿÄëøÿÿÿÿ
+D
+java:S1481(")Remove this unused "pre4" local variable.(¦‘¾Úıÿÿÿÿ
+Q	java:S125+"<This block of commented-out lines of code should be removed.(¶—Û€
+D
+java:S1481=")Remove this unused "rep1" local variable.(Ÿ›¦Ğøÿÿÿÿ
+V	java:S125E"<This block of commented-out lines of code should be removed.(’»µùÿÿÿÿ
+Q	java:S125M"<This block of commented-out lines of code should be removed.(²Âœ´
+`
+java:S2147y"ECombine this catch with the one at line 118, which has the same body.(ÉşäŒşÿÿÿÿ
+[
+java:S2147|"ECombine this catch with the one at line 121, which has the same body.(ï­£Ä
+c
+java:S3252a"MUse static access with "org.eclipse.rdf4j.model.vocabulary.XSD" for "STRING".(ËÔ¦Š
+G
+java:S1874a"1Remove this use of "XMLSchema"; it is deprecated.(ËÔ¦Š
+E	java:S106o"+Replace this use of System.out by a logger.(Ùİíüÿÿÿÿ
+V	java:S125s"<This block of commented-out lines of code should be removed.(â´ƒƒşÿÿÿÿ
+M
+java:S1135w"2Complete the task associated to this TODO comment.(ÕÌ®şÿÿÿÿ
+M
+java:S1135z"2Complete the task associated to this TODO comment.(ÕÌ®şÿÿÿÿ
+M
+java:S1135}"2Complete the task associated to this TODO comment.(ÕÌ®şÿÿÿÿ
+c
+java:S1128"MRemove this unused import 'org.eclipse.rdf4j.repository.sail.SailRepository'.(Èşšî
+\
+java:S1128"FRemove this unused import 'org.eclipse.rdf4j.rio.RDFHandlerException'.(ûóëï
+a
+java:S1128"FRemove this unused import 'org.eclipse.rdf4j.sail.memory.MemoryStore'.(»³Ó½ûÿÿÿÿ
