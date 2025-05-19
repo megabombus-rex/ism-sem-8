@@ -91,29 +91,56 @@ export default function Dashboard() {
           );
     }
 
-    return (
-        <div style={{ padding: '2rem' }}>
-          <h2>Available Gifts</h2>
-          {giftData.length === 0 ? (
-            <div>
-            <p>No gifts found.</p>
-            <button onClick={getBusinessGifts} style={styles.button}>Get gifts</button>
-            </div>
-          ) : (
-            <ul>
-              {giftData.map((gift) => (
-                <li key={gift.giftId}>
-                  <h4>{gift.name}</h4>
-                  <p>{gift.giftDescription}</p>
-                  <p>💰 {gift.costInPln} PLN</p>
-                  <p>🏷️ Tags: {gift.tags.join(', ')}</p>
-                  <p>{gift.isService ? 'Service' : 'Product'}</p>
-                  {gift.isArchived && <em>Archived</em>}
-                  <hr />
-                </li>
-              ))}
-            </ul>
-          )}
+  const jsonLdGraph = {
+    "@context": "https://schema.org",
+    "@graph": giftData.map((gift) => ({
+      "@type": gift.isService ? "Service" : "Product",
+      "@id": `#${gift.giftId}`,
+      "name": gift.name,
+      "description": gift.giftDescription,
+      "image": `/images/gift-placeholder.jpg`,
+      "offers": {
+        "@type": "Offer",
+        "price": gift.costInPln,
+        "priceCurrency": "PLN"
+      }
+    }))
+  };
+
+  return (
+    <div style={{ padding: '2rem' }} vocab="https://schema.org/" typeof="ItemList">
+      <h2>Available Gifts</h2>
+      {giftData.length === 0 ? (
+        <div>
+          <p>No gifts found.</p>
+          <button onClick={getBusinessGifts} style={styles.button}>Get gifts</button>
         </div>
-      );
+      ) : (
+        <ul>
+          {giftData.map((gift) => (
+            <li key={gift.giftId} resource={`#${gift.giftId}`} typeof={gift.isService ? "Service" : "Product"}>
+              <h4 property="name">{gift.name}</h4>
+              <p property="description">{gift.giftDescription}</p>
+              <img src='/images/placeholder.jpg' alt="Gift Image" property="image" style={{ maxWidth: '100px' }} />
+              <p>
+                💰 <span property="offers" typeof="Offer">
+                  <span property="price">{gift.costInPln}</span> PLN
+                </span>
+              </p>
+              <hr />
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* JSON-LD injection */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLdGraph, null, 2)
+        }}
+      />
+    </div>
+  );
 }
+
